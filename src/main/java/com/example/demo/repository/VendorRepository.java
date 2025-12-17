@@ -1,2 +1,4 @@
 package com.example.demo.repository;
-public class VendorRepository
+public class VendorRepository{
+    
+}
