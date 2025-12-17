@@ -3,7 +3,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Size;
-import jakarta.per
+import jakarta.persistent
 
 @Entity
 public class SLARequirement{
