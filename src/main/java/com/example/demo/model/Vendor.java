@@ -70,5 +70,5 @@ public Vendor(Long id,String name,String contactEmail,String contactPhone,boolea
     this.createdAt=createdAt;
     this.updated=updated;
 }
-public Vendor();
+public Vendor(){}
 }
