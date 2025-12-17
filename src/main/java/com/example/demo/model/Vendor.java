@@ -12,4 +12,18 @@ private boolean active;
 private Timestamp createdAt;
 private Timestamp updatedAt;
 
+public Long getId(){
+    return id;
+}
+public void setId(Long id){
+    this.id=id;
+    
+public String getId(){
+    return name;
+}
+public void setId(String name){
+    this.name=name;
+}
+
+public 
 }
