@@ -34,21 +34,21 @@ public void setId(String description){
 public int getId(){
     return maxDeliveryDays;
 }
-public void setId(max){
-    this.requirementName=requirementName;
+public void setId(int maxDeliveryDays){
+    this.maxDeliveryDays=maxDeliveryDays;
 }
 
-public String getId(){
-    return requirementName;
+public double getId(){
+    return minQualityScore;
 }
-public void setId(String requirementName){
-    this.requirementName=requirementName;
+public void setId(double minQualityScore){
+    this.minQualityScore=minQualityScore;
 }
 
-public String getId(){
-    return requirementName;
+public boolean getId(){
+    return active;
 }
-public void setId(String requirementName){
-    this.requirementName=requirementName;
+public void setId(boolean active){
+    this.active=active;
 }
 }
