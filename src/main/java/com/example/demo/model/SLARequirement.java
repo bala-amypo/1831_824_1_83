@@ -64,5 +64,5 @@ public SLARequirement(Long id, String requirementName, String description, int m
     this.minQualityScore=minQualityScore;
     this.active=active;
 }
-public SLARequirement()
+public SLARequirement() {}
 }
