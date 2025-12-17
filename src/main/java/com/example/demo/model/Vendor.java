@@ -14,7 +14,7 @@ public class Vendor{
   private String name;
 private String contactEmail;
 private String contactPhone;
-private boolean active;
+private boolean active = true;
 private Timestamp createdAt;
 private Timestamp updatedAt;
 
