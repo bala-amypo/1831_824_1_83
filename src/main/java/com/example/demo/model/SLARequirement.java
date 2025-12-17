@@ -3,7 +3,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Size;
-import jakarta.persistence.Min;
+import jakarta.validation.constraints.Min;
 
 @Entity
 public class SLARequirement{
@@ -16,7 +16,7 @@ private String description;
 private int maxDeliveryDays;
 @Size(min=0,max=100)
 private double minQualityScore;
-private boolean active;
+private boolean active = true;
 
 public Long getId(){
     return id;
