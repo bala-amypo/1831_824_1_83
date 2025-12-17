@@ -2,6 +2,7 @@ package com.example.demo.model;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Max;
 public class Vendor{
     @Id
     private Long id;
