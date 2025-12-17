@@ -46,5 +46,17 @@ public void setId(boolean active){
     this.active=active;
 }
 
-public timestamp
+public Timestamp getId(){
+    return createdAt;
+}
+public void setId(Timestamp createdAt){
+    this.createdAt=createdAt;
+}
+
+public Timestamp getId(){
+    return updatedAt;
+}
+public void setId(Timestamp updatedAt){
+    this.updated=updatedt;
+}
 }

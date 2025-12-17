@@ -7,6 +7,7 @@ public class Vendor{
 private String requirementName;
 private String description;
 private int maxDeliveryDays;
+@Size(min=0,ma
 private double minQualityScore;
 private boolean active;
 
