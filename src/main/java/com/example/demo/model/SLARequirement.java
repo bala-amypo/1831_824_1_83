@@ -8,7 +8,7 @@ public class Vendor{
 @Column(unique=true)
 private String requirementName;
 private String description;
-@Max
+@Max(0)
 private int maxDeliveryDays;
 @Size(min=0,max=100)
 private double minQualityScore;
