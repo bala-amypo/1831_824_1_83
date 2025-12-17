@@ -4,7 +4,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import java.security.Timestamp;
 import jakarta.persistence.Column;
-@Entity
+
 public class Vendor{
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -62,7 +62,7 @@ public Timestamp getId(){
     return updatedAt;
 }
 public void setId(Timestamp updatedAt){
-    this.updated=updatedt;
+    this.updated=updated;
 }
 public Vendor(Long id,String name,String contactEmail,String contactPhone,boolean active,Timestamp createdAt,Timestamp updatedAt){
     this.id=id;
