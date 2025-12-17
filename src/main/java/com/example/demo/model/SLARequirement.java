@@ -1,10 +1,11 @@
 package com.example.demo.model;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.Column;
+
 public class Vendor{
     @Id
     private Long id;
-@column(unique=true)
+
 private String requirementName;
 private String description;
 @Size(max>0)
