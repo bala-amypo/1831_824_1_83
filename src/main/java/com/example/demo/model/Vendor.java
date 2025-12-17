@@ -61,4 +61,9 @@ public Timestamp getId(){
 public void setId(Timestamp updatedAt){
     this.updated=updatedt;
 }
+public Vendor(Long id,String name,String contactEmail,String contactPhone,boolean active,Timestamp createdAt,Timestamp updatedAt){
+    this.id=id;
+    this.name=name;
+    this.contactEmail=
+}
 }
