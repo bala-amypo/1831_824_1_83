@@ -9,7 +9,7 @@ public class Vendor{
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Long id;
-  @column(unique=true)
+  @Column(unique=true)
   private String name;
 private String contactEmail;
 private String contactPhone;
@@ -22,7 +22,7 @@ public Long getId(){
 }
 public void setId(Long id){
     this.id=id;
-
+}
 public String getId(){
     return name;
 }
