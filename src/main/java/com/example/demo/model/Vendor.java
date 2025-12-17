@@ -1,10 +1,11 @@
 package com.example.demo.model;
+import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import java.security.Timestamp;
 import jakarta.persistence.Column;
-
+@Entity
 public class Vendor{
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -23,46 +24,46 @@ public Long getId(){
 public void setId(Long id){
     this.id=id;
 }
-public String getId(){
+public String getName(){
     return name;
 }
-public void setId(String name){
+public void setName(String name){
     this.name=name;
 }
 
-public String getId(){
+public String getContactEmail(){
     return contactEmail;
 }
-public void setId(String contactEmail){
+public void setContactEmail(String contactEmail){
     this.contactEmail=contactEmail;
 }
 
-public String getId(){
+public String getContactEmailphone(){
     return contactPhone;
 }
-public void setId(String contactPhone){
+public void setContactPhone(String contactPhone){
     this.contactPhone=contactPhone;
 }
 
-public boolean getId(){
+public boolean getActive(){
     return active;
 }
-public void setId(boolean active){
+public void setActive(boolean active){
     this.active=active;
 }
 
-public Timestamp getId(){
+public Timestamp getCreatedAt(){
     return createdAt;
 }
-public void setId(Timestamp createdAt){
+public void setCreatedAt(Timestamp createdAt){
     this.createdAt=createdAt;
 }
 
-public Timestamp getId(){
+public Timestamp getUpdatedAt(){
     return updatedAt;
 }
-public void setId(Timestamp updatedAt){
-    this.updated=updated;
+public void setUpdatedAt(Timestamp updatedAt){
+    this.updatedAt=updatedAt;
 }
 public Vendor(Long id,String name,String contactEmail,String contactPhone,boolean active,Timestamp createdAt,Timestamp updatedAt){
     this.id=id;
@@ -71,7 +72,7 @@ public Vendor(Long id,String name,String contactEmail,String contactPhone,boolea
     this.contactPhone=contactPhone;
     this.active=active;
     this.createdAt=createdAt;
-    this.updated=updated;
+    this.updatedAt=updatedAt;
 }
 public Vendor(){}
 }
