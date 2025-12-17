@@ -31,10 +31,10 @@ public void setId(String description){
     this.description=description;
 }
 
-public String getId(){
-    return requirementName;
+public int getId(){
+    return maxDeliveryDays;
 }
-public void setId(String requirementName){
+public void setId(max){
     this.requirementName=requirementName;
 }
 
