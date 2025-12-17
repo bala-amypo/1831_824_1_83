@@ -32,28 +32,37 @@ public void setRequirementName(String requirementName){
 public String getDescription(){
     return description;
 }
-public void setId(String description){
+public void setDescription(String description){
     this.description=description;
 }
 
-public int getId(){
+public int getMaxDeliveryDays(){
     return maxDeliveryDays;
 }
-public void setId(int maxDeliveryDays){
+public void setMaxDeliveryDays(int maxDeliveryDays){
     this.maxDeliveryDays=maxDeliveryDays;
 }
 
-public double getId(){
+public double getMinQualityScore(){
     return minQualityScore;
 }
-public void setId(double minQualityScore){
+public void setMinQualityScore(double minQualityScore){
     this.minQualityScore=minQualityScore;
 }
 
-public boolean getId(){
+public boolean getActive(){
     return active;
 }
-public void setId(boolean active){
+public void setActive(boolean active){
     this.active=active;
 }
+public SLARequirement(Long id, String requirementName, String description, int maxDeliveryDays, double minQualityScore, boolean active){
+    this.id=id;
+    this.requirementName=requirementName;
+    this.description=description;
+    this.maxDeliveryDays=maxDeliveryDays;
+    this.minQualityScore=minQualityScore;
+    this.active=active;
+}
+public SLARequirement()
 }
