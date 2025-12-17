@@ -3,7 +3,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Size;
-import jakarta.persistent
+import jakarta.persistence.Min;
 
 @Entity
 public class SLARequirement{
@@ -12,7 +12,7 @@ public class SLARequirement{
 @Column(unique=true)
 private String requirementName;
 private String description;
-@Min(value=1 message="maxDeliveryDays must be greater than 0")
+@Min(value=1, message="maxDeliveryDays must be greater than 0")
 private int maxDeliveryDays;
 @Size(min=0,max=100)
 private double minQualityScore;
