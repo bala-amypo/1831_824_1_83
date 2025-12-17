@@ -25,11 +25,11 @@ public void setId(Long id){
 public String getRequirementName(){
     return requirementName;
 }
-public void setRequiredName(String requirementName){
+public void setRequirementName(String requirementName){
     this.requirementName=requirementName;
 }
 
-public String getId(){
+public String getDescription(){
     return description;
 }
 public void setId(String description){
