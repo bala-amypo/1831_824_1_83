@@ -2,14 +2,14 @@ package com.example.demo.model;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.Max;
+
 public class Vendor{
     @Id
     private Long id;
 @Column(unique=true)
 private String requirementName;
 private String description;
-@Max(0)
+
 private int maxDeliveryDays;
 @Size(min=0,max=100)
 private double minQualityScore;

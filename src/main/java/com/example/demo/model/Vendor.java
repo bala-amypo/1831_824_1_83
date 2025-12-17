@@ -1,6 +1,8 @@
 package com.example.demo.model;
 import jakarta.persistence.Id;
 import java.security.Timestamp;
+import jakarta.persistence.Column;
+
 public class Vendor{
   @Id
   private Long id;
