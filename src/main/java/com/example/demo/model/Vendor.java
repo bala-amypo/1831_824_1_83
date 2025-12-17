@@ -17,7 +17,7 @@ public Long getId(){
 }
 public void setId(Long id){
     this.id=id;
-    
+
 public String getId(){
     return name;
 }
@@ -25,5 +25,26 @@ public void setId(String name){
     this.name=name;
 }
 
-public 
+public String getId(){
+    return contactEmail;
+}
+public void setId(String contactEmail){
+    this.contactEmail=contactEmail;
+}
+
+public String getId(){
+    return contactPhone;
+}
+public void setId(String contactPhone){
+    this.contactPhone=contactPhone;
+}
+
+public boolean getId(){
+    return active;
+}
+public void setId(boolean active){
+    this.active=active;
+}
+
+public timestamp
 }
