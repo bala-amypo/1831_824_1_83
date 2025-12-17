@@ -13,5 +13,42 @@ private boolean active;
 public Long getId(){
     return id;
 }
-public 
+public void setId(Long id){
+    this.id=id;
+}
+
+public String getId(){
+    return requirementName;
+}
+public void setId(String requirementName){
+    this.requirementName=requirementName;
+}
+
+public String getId(){
+    return description;
+}
+public void setId(String description){
+    this.description=description;
+}
+
+public String getId(){
+    return requirementName;
+}
+public void setId(String requirementName){
+    this.requirementName=requirementName;
+}
+
+public String getId(){
+    return requirementName;
+}
+public void setId(String requirementName){
+    this.requirementName=requirementName;
+}
+
+public String getId(){
+    return requirementName;
+}
+public void setId(String requirementName){
+    this.requirementName=requirementName;
+}
 }
