@@ -1,10 +1,13 @@
 package com.example.demo.model;
 import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import java.security.Timestamp;
 import jakarta.persistence.Column;
-
+@Entity
 public class Vendor{
   @Id
+  @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Long id;
   @column(unique=true)
   private String name;
