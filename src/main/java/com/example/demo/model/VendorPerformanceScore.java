@@ -61,5 +61,5 @@ private Timestamp calculatedAt;
 this.overallScore = overallScore;
 this.calculatedAt = calculatedAt;
     }
-    public Vendor
+    public VendorPerformanceScore(){}
 }
