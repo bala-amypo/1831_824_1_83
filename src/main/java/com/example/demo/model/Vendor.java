@@ -3,7 +3,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import jakarta.persistence.Column;
 @Entity
 public class Vendor{
@@ -38,7 +38,7 @@ public void setContactEmail(String contactEmail){
     this.contactEmail=contactEmail;
 }
 
-public String getContactEmailphone(){
+public String getContactPhone(){
     return contactPhone;
 }
 public void setContactPhone(String contactPhone){
