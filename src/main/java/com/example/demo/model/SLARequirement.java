@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-
+import jakarta.validation.constraints.Size;
 @Entity
 public class SLARequirement{
     @Id
@@ -15,6 +15,7 @@ public class SLARequirement{
 
 @Column(unique=true)
 private String requirementName;
+@Size(500)
 private String description;
 @Min(value=1, message="maxDeliveryDays must be >= 1")
 private int maxDeliveryDays;
