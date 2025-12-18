@@ -59,5 +59,13 @@ public class DeliveryEvaluation{
     public void setMeetsQualityTarget(boolean meetsQualityTarget) {
         this.meetsQualityTarget = meetsQualityTarget;
     }
-    public DeliveryEvaluation()
+    public DeliveryEvaluation(Long id, int actualDeliveryDays, double qualityScore, Date evaluationdate, boolean meetsDeliveryTarget, boolean meetsQualityTarget){
+         this.id = id;
+         this.actualDeliveryDays = actualDeliveryDays;
+        this.qualityScore = qualityScore;
+        this.evaluationDate = evaluationDate;
+        this.meetsDeliveryTarget = meetsDeliveryTarget;
+        this.meetsQualityTarget = meetsQualityTarget;
+    }
+    public DeliveryEvaluation(){}
 }
