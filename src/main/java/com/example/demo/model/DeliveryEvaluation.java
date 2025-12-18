@@ -6,5 +6,8 @@ public class DeliveryEvaluation{
     @Id
     private Long id;
     private int actualDeliveryDays;
-    private double qualityScore
+    private double qualityScore;
+    private Date evaluationDate;
+    private boolean meetsDeliveryTarget;
+    private boolean meetsQualityTarget;
 }
