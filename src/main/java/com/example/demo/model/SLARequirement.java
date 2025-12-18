@@ -2,16 +2,17 @@ package com.example.demo.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+//import jakarta.persistence.GeneratedValue;
+//import jakarta.persistence.GenerationType;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 
 @Entity
 public class SLARequirement{
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+     private Long id;
+    //@GeneratedValue(strategy=GenerationType.IDENTITY)
+
 @Column(unique=true)
 private String requirementName;
 private String description;
