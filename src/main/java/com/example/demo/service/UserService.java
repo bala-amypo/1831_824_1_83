@@ -1,0 +1,9 @@
+package com.example.demo.service;
+import java.util.List;
+import com.example.demo.model.User;
+public interface .VendorTierService{
+      User register(String email, String password, String role);
+
+    User login(String email, String password);
+
+    User getByEmail(String email);
