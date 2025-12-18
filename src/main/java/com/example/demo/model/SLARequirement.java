@@ -15,9 +15,10 @@ public class SLARequirement{
 @Column(unique=true)
 private String requirementName;
 private String description;
-@Min(value=1, message="maxDeliveryDays must be greater than 0")
+@Min(value=1, message="maxDeliveryDays must  0")
 private int maxDeliveryDays;
-@Size(min=0,max=100)
+@Min(value=0, message="minQualityScore must be >= 0")
+@Max(value=100, message="minQualityScore must be <= 100")
 private double minQualityScore;
 private boolean active = true;
 
