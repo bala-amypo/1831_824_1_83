@@ -15,7 +15,7 @@ public class SLARequirement{
 @Column(unique=true)
 private String requirementName;
 private String description;
-@Min(value=1, message="maxDeliveryDays must be >= 0")
+@Min(value=1, message="maxDeliveryDays must be >= 1")
 private int maxDeliveryDays;
 @Min(value=0, message="minQualityScore must be >= 0")
 @Max(value=100, message="minQualityScore must be <= 100")
