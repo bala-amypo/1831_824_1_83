@@ -39,7 +39,8 @@ public class VendorServiceImpl implements VendorService {
         existing.setName(vendor.getName());
         existing.setContactEmail(vendor.getContactEmail());
         existing.setContactPhone(vendor.getContactPhone());
-        existing.setActive(vendor.isActive());
+       existing.setActive(vendor.getActive());
+
         existing.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 
         return repo.save(existing);
