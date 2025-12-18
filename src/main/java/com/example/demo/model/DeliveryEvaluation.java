@@ -13,7 +13,7 @@ public class DeliveryEvaluation{
     private Long id;
     @Min(value=0 , message="actualDeliveryDays must be greater than or equal to 0")
     private int actualDeliveryDays;
-    @Size()
+    @Size(min=0, max=1)
     private double qualityScore;
     private Date evaluationDate;
     private boolean meetsDeliveryTarget;
