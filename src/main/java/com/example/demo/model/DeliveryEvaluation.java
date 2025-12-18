@@ -1,12 +1,19 @@
 package com.example.demo.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Min;
 import java.util.Date;
 @Entity
 public class DeliveryEvaluation{
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
+    @Min(value=0 , message="actualDeliveryDays must be greater than or equal to 0")
     private int actualDeliveryDays;
+    @Size()
     private double qualityScore;
     private Date evaluationDate;
     private boolean meetsDeliveryTarget;
