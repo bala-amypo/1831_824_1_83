@@ -12,8 +12,49 @@ public class VendorTier{
     private Long id;
      @Column(unique=true)
      private String tierName;
+     @Size(min=0,max=100)
      private double minScoreThreshold;
-     private string description;
+     private String description;
      private boolean active = true;
-     
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTierName() {
+        return tierName;
+    }
+
+    public void setTierName(String tierName) {
+        this.tierName = tierName;
+    }
+
+    public double getMinScoreThreshold() {
+        return minScoreThreshold;
+    }
+
+    public void setMinScoreThreshold(double minScoreThreshold) {
+        this.minScoreThreshold = minScoreThreshold;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
 }
