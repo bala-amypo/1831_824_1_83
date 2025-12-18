@@ -19,6 +19,7 @@ public class SLARequirement {
     private Long id;
 
     @Column(unique = true)
+    @Size(min = 1, max = 100, message = "Requirement name must be 1-100 characters")
     private String requirementName;
 
     @Size(max = 500, message = "Description cannot exceed 500 characters")
@@ -33,10 +34,12 @@ public class SLARequirement {
 
     private boolean active = true;
 
-    // Constructors
+    // Default constructor
     public SLARequirement() {}
 
-    public SLARequirement(Long id, String requirementName, String description, int maxDeliveryDays, double minQualityScore, boolean active) {
+    // Full constructor
+    public SLARequirement(Long id, String requirementName, String description,
+                          int maxDeliveryDays, double minQualityScore, boolean active) {
         this.id = id;
         this.requirementName = requirementName;
         this.description = description;
