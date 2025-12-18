@@ -54,5 +54,9 @@ private Timestamp calculatedAt;
     public void setCalculatedAt(Timestamp calculatedAt) {
         this.calculatedAt = calculatedAt;
     }
-    public VendorPerformanceScore
+    public VendorPerformanceScore(Long id, double onTimePercentage, double qualityCompliancePercentage, double overallScore, Timestamp calculatedAt){
+ this.id = id;
+  this.onTimePercentage = onTimePercentage;
+  
+    }
 }
