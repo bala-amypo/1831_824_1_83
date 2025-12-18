@@ -16,13 +16,11 @@ public class VendorController {
     @Autowired
     private VendorService service;
 
-    // CREATE
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public Vendor createVendor(@RequestBody Vendor vendor) {
         return service.createVendor(vendor);
     }
 
-    // UPDATE
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Vendor updateVendor(
             @PathVariable Long id,
@@ -30,7 +28,6 @@ public class VendorController {
         return service.updateVendor(id, vendor);
     }
 
-    // GET BY ID
     @GetMapping("/{id}")
     public Vendor getVendorById(@PathVariable Long id) {
         return service.getVendorById(id);
