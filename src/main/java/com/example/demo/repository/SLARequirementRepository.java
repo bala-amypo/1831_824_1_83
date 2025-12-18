@@ -6,5 +6,5 @@ import com.example.demo.model.SLARequirement;
 
 @Repository
 public interface SLARequirementRepository extends JpaRepository<SLARequirement, Long> {
-    boolean existsByRequirementName(String name);
+    boolean existsByRequirementName(String requirementName);
 }
