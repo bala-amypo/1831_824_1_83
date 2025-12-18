@@ -33,13 +33,11 @@ public class VendorController {
         return service.getVendorById(id);
     }
 
-    // GET ALL
     @GetMapping
     public List<Vendor> getAllVendors() {
         return service.getAllVendors();
     }
 
-    // DEACTIVATE
     @PutMapping("/{id}/deactivate")
     public Vendor deactivateVendor(@PathVariable Long id) {
         return service.deactivateVendor(id);
