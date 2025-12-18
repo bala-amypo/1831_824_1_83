@@ -20,6 +20,11 @@ public class VendorController {
     public Vendor createVendor(@RequestBody Vendor vendor) {
         return service.createVendor(vendor);
     }
+    @PostMapping(consumes = "application/json")
+public Vendor createVendor(@RequestBody Vendor vendor) {
+    return service.createVendor(vendor);
+}
+
 
 
     @GetMapping("/{id}")
