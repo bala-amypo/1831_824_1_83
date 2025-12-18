@@ -57,6 +57,9 @@ private Timestamp calculatedAt;
     public VendorPerformanceScore(Long id, double onTimePercentage, double qualityCompliancePercentage, double overallScore, Timestamp calculatedAt){
  this.id = id;
   this.onTimePercentage = onTimePercentage;
-  
+  this.qualityCompliancePercentage = qualityCompliancePercentage;
+this.overallScore = overallScore;
+this.calculatedAt = calculatedAt;
     }
+    public Vendor
 }
