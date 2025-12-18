@@ -56,5 +56,13 @@ public class VendorTier{
     public void setActive(boolean active) {
         this.active = active;
     }
-
+ public VendorTier(Long id, String tierName,  double minScoreThreshold, String description,
+            boolean active) {
+        this.id = id;
+        this.tierName = tierName;
+        this.minScoreThreshold = minScoreThreshold;
+        this.description = description;
+        this.active = active;
+     }
+     public VendorTier(){}
 }
