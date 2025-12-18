@@ -23,10 +23,19 @@ public class VendorController {
 
     // 2. Update Vendor
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Vendor updateVendor(@PathVariable Long id,
-                               @RequestBody Vendor vendor) {
-        return service.updateVendor(id, vendor);
-    }
+  @Override
+public Vendor updateVendor(Long id, Vendor vendor) {
+    Vendor existing = getVendorById(id);
+
+    existing.setName(vendor.getName());
+    existing.setContactEmail(vendor.getContactEmail());
+    existing.setContactPhone(vendor.getContactPhone());
+    existing.setActive(vendor.getActive());
+    existing.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+
+    return repo.save(existing);
+}
+
 
     // 3. Get Vendor by ID
     @GetMapping("/{id}")
