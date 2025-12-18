@@ -17,7 +17,7 @@ public class SLARequirementServiceImpl implements SLARequirementService {
 
     @Override
     public SLARequirement createSLA(SLARequirement sla) {
-        if (repo.existsByName(sla.getName())) {
+        if (repo.existsByRequirementName(sla.getRequirementName())) {
             throw new RuntimeException("SLA already exists");
         }
         sla.setActive(true);
@@ -27,10 +27,10 @@ public class SLARequirementServiceImpl implements SLARequirementService {
     @Override
     public SLARequirement updateSLA(Long id, SLARequirement sla) {
         SLARequirement existing = getSLAById(id);
-        existing.setName(sla.getName());
+        existing.setRequirementName(sla.getRequirementName());
         existing.setDescription(sla.getDescription());
-        existing.setResponseTime(sla.getResponseTime());
-        existing.setResolutionTime(sla.getResolutionTime());
+        existing.setMaxDeliveryDays(sla.getMaxDeliveryDays());
+        existing.setMinQualityScore(sla.getMinQualityScore());
         return repo.save(existing);
     }
 
