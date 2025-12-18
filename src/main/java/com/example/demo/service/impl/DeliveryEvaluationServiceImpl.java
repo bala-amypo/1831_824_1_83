@@ -1,10 +1,8 @@
 package com.example.demo.service.impl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.demo.model.DeliveryEvaluation;
 import com.example.demo.repository.DeliveryEvaluationRepository;
 import com.example.demo.service.DeliveryEvaluationService;
@@ -17,8 +15,6 @@ public class DeliveryEvaluationServiceImpl implements DeliveryEvaluationService 
 
     @Override
     public DeliveryEvaluation createEvaluation(DeliveryEvaluation evaluation) {
-        evaluation.setMeetsDeliveryTarget(true);
-        evaluation.setMeetsQualityTarget(true);
         return repo.save(evaluation);
     }
 
