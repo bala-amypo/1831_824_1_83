@@ -16,10 +16,7 @@ public class VendorController {
     private VendorService service;
 
     
-    @PostMapping
-    public Vendor createVendor(@RequestBody Vendor vendor) {
-        return service.createVendor(vendor);
-    }
+  
     @PostMapping(consumes = "application/json")
 public Vendor createVendor(@RequestBody Vendor vendor) {
     return service.createVendor(vendor);
