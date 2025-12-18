@@ -1,10 +1,10 @@
 package com.example.demo.service;
 import java.util.List;
-import com.example.demo.model.SLARequirementS;
-public interface VendorService{
-    Vendor createVendor(Vendor vendor);
-    Vendor updateVendor(Long id, Vendor vendor);
-    Vendor getVendorById(Long id);
-    List<Vendor> getAllVendors();
-    void deactivateVendor(Long id);
+import com.example.demo.model.SLARequirementService;
+public interface SLARequirementService{
+    SLARequirement createRequirement(SLARequirement req);
+    SLARequirement updateRequirement(Long id, SLARequirement req);
+    SLARequirement getRequirementById(Long id);
+    List<SLARequirement> getAllRequirements();
+    void deactivateRequirement(Long id);
 }
