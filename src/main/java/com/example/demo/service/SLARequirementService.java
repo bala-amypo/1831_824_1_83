@@ -12,5 +12,7 @@ public interface SLARequirementService {
 
     List<SLARequirement> getAllSLARequirements();
 
-    SLARequirement updateSLAStatus(Long id, Boolean active);
+    SLARequirement updateSLA(Long id, SLARequirement updated);
+
+    void deleteSLARequirement(Long id);
 }

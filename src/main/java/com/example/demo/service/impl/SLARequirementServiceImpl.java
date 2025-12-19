@@ -3,7 +3,6 @@ package com.example.demo.service.impl;
 import com.example.demo.model.SLARequirement;
 import com.example.demo.repository.SLARequirementRepository;
 import com.example.demo.service.SLARequirementService;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +14,7 @@ public class SLARequirementServiceImpl implements SLARequirementService {
 
     private final SLARequirementRepository repo;
 
+    // Constructor Injection
     public SLARequirementServiceImpl(SLARequirementRepository repo) {
         this.repo = repo;
     }
@@ -27,7 +27,8 @@ public class SLARequirementServiceImpl implements SLARequirementService {
     @Override
     public SLARequirement getSLARequirementById(Long id) {
         return repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("SLARequirement not found"));
+                .orElseThrow(() ->
+                        new RuntimeException("SLARequirement not found with id " + id));
     }
 
     @Override
@@ -36,9 +37,21 @@ public class SLARequirementServiceImpl implements SLARequirementService {
     }
 
     @Override
-    public SLARequirement updateSLAStatus(Long id, Boolean active) {
+    public SLARequirement updateSLA(Long id, SLARequirement updated) {
+        SLARequirement existing = getSLARequirementById(id);
+
+        existing.setRequirementName(updated.getRequirementName());
+        existing.setDescription(updated.getDescription());
+        existing.setMaxDeliveryDays(updated.getMaxDeliveryDays());
+        existing.setMinQualityScore(updated.getMinQualityScore());
+        existing.setActive(updated.getActive());
+
+        return repo.save(existing);
+    }
+
+    @Override
+    public void deleteSLARequirement(Long id) {
         SLARequirement sla = getSLARequirementById(id);
-        sla.setActive(active);
-        return repo.save(sla);
+        repo.delete(sla);
     }
 }
