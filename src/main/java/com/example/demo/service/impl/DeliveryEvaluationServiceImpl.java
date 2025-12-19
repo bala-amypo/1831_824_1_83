@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DeliveryEvaluationServiceImpl
-        implements DeliveryEvaluationService {
+public class DeliveryEvaluationServiceImpl implements DeliveryEvaluationService {
 
     private final DeliveryEvaluationRepository repo;
 
@@ -39,11 +38,12 @@ public class DeliveryEvaluationServiceImpl
     public DeliveryEvaluation updateEvaluation(Long id, DeliveryEvaluation evaluation) {
         DeliveryEvaluation existing = getEvaluationById(id);
 
-        existing.setVendorId(evaluation.getVendorId());
-        existing.setSlaRequirementId(evaluation.getSlaRequirementId());
-        existing.setDeliveryDays(evaluation.getDeliveryDays());
+        // ✅ CORRECT setters & getters
+        existing.setActualDeliveryDays(evaluation.getActualDeliveryDays());
         existing.setQualityScore(evaluation.getQualityScore());
-        existing.setPassed(evaluation.getPassed());
+        existing.setEvaluationDate(evaluation.getEvaluationDate());
+        existing.setMeetsDeliveryTarget(evaluation.isMeetsDeliveryTarget());
+        existing.setMeetsQualityTarget(evaluation.isMeetsQualityTarget());
 
         return repo.save(existing);
     }
