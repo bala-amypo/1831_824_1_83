@@ -1,4 +1,8 @@
 package com.example.demo.model;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -23,7 +27,8 @@ public class DeliveryEvaluation {
     @DecimalMax(value = "1.0", message = "qualityScore must be <= 1")
     private double qualityScore;
 
-    private LocalDate evaluationDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+private LocalDate evaluationDate;
 
     private boolean meetsDeliveryTarget;
 
