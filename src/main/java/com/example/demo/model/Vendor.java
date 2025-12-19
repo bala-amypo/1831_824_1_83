@@ -12,12 +12,6 @@ import lombok.Setter;
 import java.sql.Timestamp;
 
 @Entity
-@Table(
-    name = "vendors",
-    uniqueConstraints = {
-        @UniqueConstraint(columnNames = "name")
-    }
-)
 @Getter
 @Setter
 @AllArgsConstructor
@@ -28,14 +22,13 @@ public class Vendor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String name;
 
     private String contactEmail;
 
     private String contactPhone;
 
-    @Column(nullable = false)
     private Boolean active = true;
 
     private Timestamp createdAt;
