@@ -12,7 +12,7 @@ public class SLARequirementController {
 
     private final SLARequirementService service;
 
-    // ✅ Constructor Injection (REQUIRED)
+    // Constructor Injection
     public SLARequirementController(SLARequirementService service) {
         this.service = service;
     }
@@ -35,11 +35,18 @@ public class SLARequirementController {
         return service.getSLARequirementById(id);
     }
 
-    // UPDATE STATUS ONLY
-    @PutMapping("/{id}/status")
-    public SLARequirement updateStatus(
+    // UPDATE (FULL UPDATE)
+    @PutMapping("/{id}")
+    public SLARequirement updateSLA(
             @PathVariable Long id,
-            @RequestParam Boolean active) {
-        return service.updateSLAStatus(id, active);
+            @RequestBody SLARequirement updated) {
+
+        return service.updateSLA(id, updated);
+    }
+
+    // DELETE
+    @DeleteMapping("/{id}")
+    public void deleteSLA(@PathVariable Long id) {
+        service.deleteSLARequirement(id);
     }
 }
