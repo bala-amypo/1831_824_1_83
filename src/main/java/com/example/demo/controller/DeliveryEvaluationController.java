@@ -1,48 +1,45 @@
 package com.example.demo.controller;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.MediaType;
-import com.example.demo.model.DeliveryEvaluation;
+import com.example.demo.entity.DeliveryEvaluation;
 import com.example.demo.service.DeliveryEvaluationService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/evaluations")
+@RequestMapping("/api/delivery-evaluations")
 public class DeliveryEvaluationController {
 
-    @Autowired
-    private DeliveryEvaluationService service;
+    private final DeliveryEvaluationService service;
 
-    // CREATE
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
-                 produces = MediaType.APPLICATION_JSON_VALUE)
-    public DeliveryEvaluation createEvaluation(@RequestBody DeliveryEvaluation evaluation) {
+    public DeliveryEvaluationController(DeliveryEvaluationService service) {
+        this.service = service;
+    }
+
+    @PostMapping
+    public DeliveryEvaluation create(@RequestBody DeliveryEvaluation evaluation) {
         return service.createEvaluation(evaluation);
     }
 
-    // UPDATE
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public DeliveryEvaluation updateEvaluation(@PathVariable Long id,
-                                               @RequestBody DeliveryEvaluation evaluation) {
-        return service.updateEvaluation(id, evaluation);
-    }
-
-    // GET BY ID
     @GetMapping("/{id}")
-    public DeliveryEvaluation getEvaluationById(@PathVariable Long id) {
+    public DeliveryEvaluation getById(@PathVariable Long id) {
         return service.getEvaluationById(id);
     }
 
-    // GET ALL
     @GetMapping
-    public List<DeliveryEvaluation> getAllEvaluations() {
+    public List<DeliveryEvaluation> getAll() {
         return service.getAllEvaluations();
     }
 
-    // DEACTIVATE
-    @PutMapping("/{id}/deactivate")
-    public void deactivateEvaluation(@PathVariable Long id) {
-        service.deactivateEvaluation(id);
+    @PutMapping("/{id}")
+    public DeliveryEvaluation update(
+            @PathVariable Long id,
+            @RequestBody DeliveryEvaluation evaluation) {
+        return service.updateEvaluation(id, evaluation);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        service.deleteEvaluation(id);
     }
 }

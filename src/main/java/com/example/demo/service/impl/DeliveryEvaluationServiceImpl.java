@@ -1,38 +1,33 @@
 package com.example.demo.service.impl;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.example.demo.model.DeliveryEvaluation;
+import com.example.demo.entity.DeliveryEvaluation;
 import com.example.demo.repository.DeliveryEvaluationRepository;
 import com.example.demo.service.DeliveryEvaluationService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
-public class DeliveryEvaluationServiceImpl implements DeliveryEvaluationService {
+public class DeliveryEvaluationServiceImpl
+        implements DeliveryEvaluationService {
 
-    @Autowired
-    private DeliveryEvaluationRepository repo;
+    private final DeliveryEvaluationRepository repo;
 
-    @Override
-    public DeliveryEvaluation createEvaluation(DeliveryEvaluation evaluation) {
-        return repo.save(evaluation);
+    public DeliveryEvaluationServiceImpl(DeliveryEvaluationRepository repo) {
+        this.repo = repo;
     }
 
     @Override
-    public DeliveryEvaluation updateEvaluation(Long id, DeliveryEvaluation evaluation) {
-        DeliveryEvaluation existing = getEvaluationById(id);
-        existing.setActualDeliveryDays(evaluation.getActualDeliveryDays());
-        existing.setQualityScore(evaluation.getQualityScore());
-        existing.setEvaluationDate(evaluation.getEvaluationDate());
-        existing.setMeetsDeliveryTarget(evaluation.isMeetsDeliveryTarget());
-        existing.setMeetsQualityTarget(evaluation.isMeetsQualityTarget());
-        return repo.save(existing);
+    public DeliveryEvaluation createEvaluation(DeliveryEvaluation evaluation) {
+        evaluation.setId(null); // force auto-increment
+        return repo.save(evaluation);
     }
 
     @Override
     public DeliveryEvaluation getEvaluationById(Long id) {
         return repo.findById(id)
-                   .orElseThrow(() -> new RuntimeException("DeliveryEvaluation not found"));
+                .orElseThrow(() ->
+                        new RuntimeException("DeliveryEvaluation not found with id " + id));
     }
 
     @Override
@@ -41,10 +36,20 @@ public class DeliveryEvaluationServiceImpl implements DeliveryEvaluationService 
     }
 
     @Override
-    public void deactivateEvaluation(Long id) {
+    public DeliveryEvaluation updateEvaluation(Long id, DeliveryEvaluation evaluation) {
         DeliveryEvaluation existing = getEvaluationById(id);
-        existing.setMeetsDeliveryTarget(false);
-        existing.setMeetsQualityTarget(false);
-        repo.save(existing);
+
+        existing.setVendorId(evaluation.getVendorId());
+        existing.setSlaRequirementId(evaluation.getSlaRequirementId());
+        existing.setDeliveryDays(evaluation.getDeliveryDays());
+        existing.setQualityScore(evaluation.getQualityScore());
+        existing.setPassed(evaluation.getPassed());
+
+        return repo.save(existing);
+    }
+
+    @Override
+    public void deleteEvaluation(Long id) {
+        repo.deleteById(id);
     }
 }
