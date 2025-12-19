@@ -1,18 +1,13 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 
 @Entity
 @Table(
-    name = "sla_requirement",
-    uniqueConstraints = {
-        @UniqueConstraint(columnNames = "requirementName")
-    }
+        name = "sla_requirement",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "requirementName")
+        }
 )
 public class SLARequirement {
 
@@ -26,13 +21,10 @@ public class SLARequirement {
     @Column(nullable = false)
     private String description;
 
-    @NotNull
-    @Positive
+    @Column(nullable = false)
     private Integer maxDeliveryDays;
 
-    @NotNull
-    @Min(0)
-    @Max(100)
+    @Column(nullable = false)
     private Double minQualityScore;
 
     @Column(nullable = false)
@@ -41,13 +33,11 @@ public class SLARequirement {
     // ---------- Constructors ----------
     public SLARequirement() {}
 
-    public SLARequirement(
-            String requirementName,
-            String description,
-            Integer maxDeliveryDays,
-            Double minQualityScore,
-            Boolean active) {
-
+    public SLARequirement(String requirementName,
+                          String description,
+                          Integer maxDeliveryDays,
+                          Double minQualityScore,
+                          Boolean active) {
         this.requirementName = requirementName;
         this.description = description;
         this.maxDeliveryDays = maxDeliveryDays;
