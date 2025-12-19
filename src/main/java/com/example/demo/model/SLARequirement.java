@@ -1,11 +1,6 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "slarequirement")
@@ -18,15 +13,17 @@ public class SLARequirement {
     private String requirementName;
     private String description;
     private Integer maxDeliveryDays;
-    @Column(nullable=false)
+
+    @Column(nullable = false)
     private Integer minQualityScore;
+
     private Boolean active;
 
-    public SLARequirement() {
-    }
+    public SLARequirement() {}
 
-    public SLARequirement(String requirementName, String description, Integer maxDeliveryDays,
-                          Integer minQualityScore, Boolean active) {
+    public SLARequirement(String requirementName, String description,
+                          Integer maxDeliveryDays, Integer minQualityScore,
+                          Boolean active) {
         this.requirementName = requirementName;
         this.description = description;
         this.maxDeliveryDays = maxDeliveryDays;
@@ -34,36 +31,16 @@ public class SLARequirement {
         this.active = active;
     }
 
-    // ----- GETTERS -----
-    public Long getId() {
-        return id;
-    }
+    // GETTERS
+    public Long getId() { return id; }
 
-    public String getRequirementName() {
-        return requirementName;
-    }
+    public String getRequirementName() { return requirementName; }
+    public String getDescription() { return description; }
+    public Integer getMaxDeliveryDays() { return maxDeliveryDays; }
+    public Integer getMinQualityScore() { return minQualityScore; }
+    public Boolean getActive() { return active; }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public Integer getMaxDeliveryDays() {
-        return maxDeliveryDays;
-    }
-
-    public Integer getMinQualityScore() {
-        return minQualityScore;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    // ----- SETTERS -----
-    public void setId(Long id){
-        this.id=id;
-
-    }
+    // SETTERS
     public void setRequirementName(String requirementName) {
         this.requirementName = requirementName;
     }
