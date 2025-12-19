@@ -17,36 +17,43 @@ public class SLARequirementController {
         this.service = service;
     }
 
-    // CREATE
+    // ---------------- CREATE ----------------
+    // POST /
     @PostMapping
-    public SLARequirement createSLA(@RequestBody SLARequirement slaRequirement) {
-        return service.createSLARequirement(slaRequirement);
+    public SLARequirement createRequirement(
+            @RequestBody SLARequirement req) {
+        return service.createRequirement(req);
     }
 
-    // GET ALL
-    @GetMapping
-    public List<SLARequirement> getAllSLA() {
-        return service.getAllSLARequirements();
-    }
-
-    // GET BY ID
-    @GetMapping("/{id}")
-    public SLARequirement getSLAById(@PathVariable Long id) {
-        return service.getSLARequirementById(id);
-    }
-
-    // UPDATE (FULL UPDATE)
+    // ---------------- UPDATE ----------------
+    // PUT /{id}
     @PutMapping("/{id}")
-    public SLARequirement updateSLA(
+    public SLARequirement updateRequirement(
             @PathVariable Long id,
-            @RequestBody SLARequirement updated) {
-
-        return service.updateSLA(id, updated);
+            @RequestBody SLARequirement req) {
+        return service.updateRequirement(id, req);
     }
 
-    // DELETE
-    @DeleteMapping("/{id}")
-    public void deleteSLA(@PathVariable Long id) {
-        service.deleteSLARequirement(id);
+    // ---------------- GET BY ID ----------------
+    // GET /{id}
+    @GetMapping("/{id}")
+    public SLARequirement getRequirementById(
+            @PathVariable Long id) {
+        return service.getRequirementById(id);
+    }
+
+    // ---------------- GET ALL ----------------
+    // GET /
+    @GetMapping
+    public List<SLARequirement> getAllRequirements() {
+        return service.getAllRequirements();
+    }
+
+    // ---------------- DEACTIVATE ----------------
+    // PUT /{id}/deactivate
+    @PutMapping("/{id}/deactivate")
+    public void deactivateRequirement(
+            @PathVariable Long id) {
+        service.deactivateRequirement(id);
     }
 }
