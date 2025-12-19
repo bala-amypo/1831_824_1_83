@@ -60,6 +60,10 @@ public class SLARequirement {
     }
 
     // ----- SETTERS -----
+    public void setId(Long id){
+        this.id=id;
+
+    }
     public void setRequirementName(String requirementName) {
         this.requirementName = requirementName;
     }
