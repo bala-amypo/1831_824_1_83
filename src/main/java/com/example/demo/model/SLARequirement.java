@@ -5,7 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 
 @Entity
 @Table(name = "slarequirement")
@@ -18,6 +18,7 @@ public class SLARequirement {
     private String requirementName;
     private String description;
     private Integer maxDeliveryDays;
+    @Column(nullable=false)
     private Integer minQualityScore;
     private Boolean active;
 
