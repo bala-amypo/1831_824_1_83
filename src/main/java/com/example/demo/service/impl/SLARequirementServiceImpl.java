@@ -5,6 +5,7 @@ import com.example.demo.repository.SLARequirementRepository;
 import com.example.demo.service.SLARequirementService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import jakarta.persistence.UniqueConstraint;
 
 import java.util.List;
 
