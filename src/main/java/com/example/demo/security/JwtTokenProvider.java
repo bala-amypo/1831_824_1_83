@@ -1,49 +1,49 @@
-package com.example.demo.security;
+// package com.example.demo.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+// import io.jsonwebtoken.Claims;
+// import io.jsonwebtoken.Jwts;
+// import io.jsonwebtoken.SignatureAlgorithm;
 
-import java.util.Date;
+// import java.util.Date;
 
-public class JwtTokenProvider {
+// public class JwtTokenProvider {
 
-    private final String secret;
-    private final long validityInMs;
+//     private final String secret;
+//     private final long validityInMs;
 
-    public JwtTokenProvider(String secret, long validityInMs) {
-        this.secret = secret;
-        this.validityInMs = validityInMs;
-    }
+//     public JwtTokenProvider(String secret, long validityInMs) {
+//         this.secret = secret;
+//         this.validityInMs = validityInMs;
+//     }
 
-    public String createToken(String subject) {
-        Claims claims = Jwts.claims().setSubject(subject);
+//     public String createToken(String subject) {
+//         Claims claims = Jwts.claims().setSubject(subject);
 
-        Date now = new Date();
-        Date validity = new Date(now.getTime() + validityInMs);
+//         Date now = new Date();
+//         Date validity = new Date(now.getTime() + validityInMs);
 
-        return Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(now)
-                .setExpiration(validity)
-                .signWith(SignatureAlgorithm.HS256, secret)
-                .compact();
-    }
+//         return Jwts.builder()
+//                 .setClaims(claims)
+//                 .setIssuedAt(now)
+//                 .setExpiration(validity)
+//                 .signWith(SignatureAlgorithm.HS256, secret)
+//                 .compact();
+//     }
 
-    public String getSubject(String token) {
-        return Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
-    }
+//     public String getSubject(String token) {
+//         return Jwts.parser()
+//                 .setSigningKey(secret)
+//                 .parseClaimsJws(token)
+//                 .getBody()
+//                 .getSubject();
+//     }
 
-    public boolean validateToken(String token) {
-        try {
-            Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-}
+//     public boolean validateToken(String token) {
+//         try {
+//             Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+//             return true;
+//         } catch (Exception e) {
+//             return false;
+//         }
+//     }
+// }
