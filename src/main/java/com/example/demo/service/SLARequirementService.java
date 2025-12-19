@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface SLARequirementService {
 
-    SLARequirement createSLARequirement(SLARequirement slaRequirement);
+    SLARequirement createRequirement(SLARequirement req);
 
-    SLARequirement getSLARequirementById(Long id);
+    SLARequirement updateRequirement(Long id, SLARequirement req);
 
-    List<SLARequirement> getAllSLARequirements();
+    SLARequirement getRequirementById(Long id);
 
-    SLARequirement updateSLA(Long id, SLARequirement updated);
+    List<SLARequirement> getAllRequirements();
 
-    void deleteSLARequirement(Long id);
+    void deactivateRequirement(Long id);
 }
