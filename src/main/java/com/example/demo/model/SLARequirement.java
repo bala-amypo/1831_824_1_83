@@ -1,45 +1,30 @@
 package com.example.demo.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.DecimalMax;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "slarequirement")
 public class SLARequirement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    @Size(min = 1, max = 100, message = "Requirement name must be 1-100 characters")
     private String requirementName;
-
-    @Size(max = 500, message = "Description cannot exceed 500 characters")
     private String description;
+    private Integer maxDeliveryDays;
+    private Integer minQualityScore;
+    private Boolean active;
 
-    @Min(value = 1, message = "maxDeliveryDays must be >= 1")
-    private int maxDeliveryDays;
+    public SLARequirement() {
+    }
 
-    @DecimalMin(value = "0.0", message = "minQualityScore must be >= 0")
-    @DecimalMax(value = "100.0", message = "minQualityScore must be <= 100")
-    private double minQualityScore;
-
-    private boolean active = true;
-
-    // Default constructor
-    public SLARequirement() {}
-
-    // Full constructor
-    public SLARequirement(Long id, String requirementName, String description,
-                          int maxDeliveryDays, double minQualityScore, boolean active) {
-        this.id = id;
+    public SLARequirement(String requirementName, String description, Integer maxDeliveryDays,
+                          Integer minQualityScore, Boolean active) {
         this.requirementName = requirementName;
         this.description = description;
         this.maxDeliveryDays = maxDeliveryDays;
@@ -47,46 +32,49 @@ public class SLARequirement {
         this.active = active;
     }
 
-    // Getters and Setters
+    // ----- GETTERS -----
     public Long getId() {
         return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getRequirementName() {
         return requirementName;
     }
-    public void setRequirementName(String requirementName) {
-        this.requirementName = requirementName;
-    }
 
     public String getDescription() {
         return description;
     }
+
+    public Integer getMaxDeliveryDays() {
+        return maxDeliveryDays;
+    }
+
+    public Integer getMinQualityScore() {
+        return minQualityScore;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    // ----- SETTERS -----
+    public void setRequirementName(String requirementName) {
+        this.requirementName = requirementName;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public int getMaxDeliveryDays() {
-        return maxDeliveryDays;
-    }
-    public void setMaxDeliveryDays(int maxDeliveryDays) {
+    public void setMaxDeliveryDays(Integer maxDeliveryDays) {
         this.maxDeliveryDays = maxDeliveryDays;
     }
 
-    public double getMinQualityScore() {
-        return minQualityScore;
-    }
-    public void setMinQualityScore(double minQualityScore) {
+    public void setMinQualityScore(Integer minQualityScore) {
         this.minQualityScore = minQualityScore;
     }
 
-    public boolean getActive() {
-        return active;
-    }
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 }
