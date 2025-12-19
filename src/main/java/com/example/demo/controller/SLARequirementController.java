@@ -1,48 +1,54 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.SLARequirement;
-import com.example.demo.service.SLARequirementService;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.repository.SLARequirementRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/sla-requirements")
 public class SLARequirementController {
 
-    private final SLARequirementService service;
+    @Autowired
+    private SLARequirementRepository slaRequirementRepository;
 
-    public SLARequirementController(SLARequirementService service) {
-        this.service = service;
-    }
-
+    // CREATE
     @PostMapping
-    public SLARequirement create(@RequestBody SLARequirement slaRequirement) {
-        return service.createSLARequirement(slaRequirement);
+    public SLARequirement createSLA(@RequestBody SLARequirement slaRequirement) {
+        // Do NOT set id manually, it will auto-increment
+        return slaRequirementRepository.save(slaRequirement);
     }
 
-    @GetMapping("/{id}")
-    public SLARequirement getById(@PathVariable Long id) {
-        return service.getSLARequirementById(id);
-    }
-
+    // GET ALL
     @GetMapping
-    public List<SLARequirement> getAll() {
-        return service.getAllSLARequirements();
+    public List<SLARequirement> getAllSLA() {
+        return slaRequirementRepository.findAll();
     }
 
-    @PutMapping("/{id}/status")
-    public SLARequirement updateStatus(
-            @PathVariable Long id,
-            @RequestParam Boolean active) {
-        return service.updateSLAStatus(id, active);
+    // GET BY ID
+    @GetMapping("/{id}")
+    public Optional<SLARequirement> getSLAById(@PathVariable Long id) {
+        return slaRequirementRepository.findById(id);
+    }
+
+    // UPDATE
+    @PutMapping("/{id}")
+    public SLARequirement updateSLA(@PathVariable Long id, @RequestBody SLARequirement slaDetails) {
+        SLARequirement sla = slaRequirementRepository.findById(id).orElseThrow();
+        sla.setRequirementName(slaDetails.getRequirementName());
+        sla.setDescription(slaDetails.getDescription());
+        sla.setMaxDeliveryDays(slaDetails.getMaxDeliveryDays());
+        sla.setMinQualityScore(slaDetails.getMinQualityScore());
+        sla.setActive(slaDetails.getActive());
+        return slaRequirementRepository.save(sla);
+    }
+
+    // DELETE
+    @DeleteMapping("/{id}")
+    public void deleteSLA(@PathVariable Long id) {
+        slaRequirementRepository.deleteById(id);
     }
 }
