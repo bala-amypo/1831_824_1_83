@@ -26,9 +26,7 @@ public class SLARequirement {
 
     private Integer maxDeliveryDays;
 
-    @Column(nullable = false)
     private Double minQualityScore;
 
-    @Column(nullable = false)
     private Boolean active = true;
 }
