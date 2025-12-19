@@ -22,33 +22,26 @@ public class SLARequirementServiceImpl implements SLARequirementService {
 
     // ---------------- CREATE ----------------
     @Override
-    public SLARequirement createRequirement(SLARequirement req) {
+public SLARequirement createRequirement(SLARequirement req) {
 
-        // Validate days > 0
-        if (req.getMaxDeliveryDays() == null || req.getMaxDeliveryDays() <= 0) {
-            throw new IllegalArgumentException("maxDeliveryDays must be greater than 0");
-        }
-
-        // Validate score 0–100
-        if (req.getMinQualityScore() == null ||
-                req.getMinQualityScore() < 0 ||
-                req.getMinQualityScore() > 100) {
-            throw new IllegalArgumentException("minQualityScore must be between 0 and 100");
-        }
-
-        // Check duplicate name
-        repo.findByRequirementName(req.getRequirementName())
-                .ifPresent(r -> {
-                    throw new IllegalStateException("requirementName already exists");
-                });
-
-        // Default active = true
-        if (req.getActive() == null) {
-            req.setActive(true);
-        }
-
-        return repo.save(req);
+    if (req.getMaxDeliveryDays() == null || req.getMaxDeliveryDays() <= 0) {
+        throw new IllegalStateException("maxDeliveryDays must be > 0");
     }
+
+    if (req.getMinQualityScore() == null ||
+        req.getMinQualityScore() < 0 ||
+        req.getMinQualityScore() > 100) {
+        throw new IllegalStateException("minQualityScore must be between 0 and 100");
+    }
+
+    if (repo.findByRequirementName(req.getRequirementName()).isPresent()) {
+        throw new IllegalStateException("requirement already exists");
+    }
+
+    req.setActive(true);
+    return repo.save(req);
+}
+
 
     // ---------------- UPDATE ----------------
     @Override
