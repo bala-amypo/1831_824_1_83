@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class VendorServiceImpl implements VendorService {
+public class VenServiceImpl implements VendorService {
 
     private final VendorRepository vendorRepository;
 
