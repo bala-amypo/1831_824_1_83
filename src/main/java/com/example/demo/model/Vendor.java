@@ -1,78 +1,44 @@
 package com.example.demo.model;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.UniqueConstraint;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.sql.Timestamp;
-import jakarta.persistence.Column;
+
 @Entity
-public class Vendor{
-  @Id
-  @GeneratedValue(strategy=GenerationType.IDENTITY)
-  private Long id;
-  @Column(unique=true)
-  private String name;
-private String contactEmail;
-private String contactPhone;
-private boolean active = true;
-private Timestamp createdAt;
-private Timestamp updatedAt;
+@Table(
+    name = "vendors",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = "name")
+    }
+)
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class Vendor {
 
-public Long getId(){
-    return id;
-}
-public void setId(Long id){
-    this.id=id;
-}
-public String getName(){
-    return name;
-}
-public void setName(String name){
-    this.name=name;
-}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-public String getContactEmail(){
-    return contactEmail;
-}
-public void setContactEmail(String contactEmail){
-    this.contactEmail=contactEmail;
-}
+    @Column(nullable = false, unique = true)
+    private String name;
 
-public String getContactPhone(){
-    return contactPhone;
-}
-public void setContactPhone(String contactPhone){
-    this.contactPhone=contactPhone;
-}
+    private String contactEmail;
 
-public boolean getActive(){
-    return active;
-}
-public void setActive(boolean active){
-    this.active=active;
-}
+    private String contactPhone;
 
-public Timestamp getCreatedAt(){
-    return createdAt;
-}
-public void setCreatedAt(Timestamp createdAt){
-    this.createdAt=createdAt;
-}
+    @Column(nullable = false)
+    private Boolean active = true;
 
-public Timestamp getUpdatedAt(){
-    return updatedAt;
-}
-public void setUpdatedAt(Timestamp updatedAt){
-    this.updatedAt=updatedAt;
-}
-public Vendor(Long id,String name,String contactEmail,String contactPhone,boolean active,Timestamp createdAt,Timestamp updatedAt){
-    this.id=id;
-    this.name=name;
-    this.contactEmail=contactEmail;
-    this.contactPhone=contactPhone;
-    this.active=active;
-    this.createdAt=createdAt;
-    this.updatedAt=updatedAt;
-}
-public Vendor(){}
+    private Timestamp createdAt;
+
+    private Timestamp updatedAt;
 }
