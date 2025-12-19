@@ -1,65 +1,45 @@
 package com.example.demo.model;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import java.security.Timestamp;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.sql.Timestamp;
+
 @Entity
-public class VendorPerformanceScore{
-@Id
-@GeneratedValue(strategy=GenerationType.IDENTITY)
-private Long id;
-private double onTimePercentage;
-private double qualityCompliancePercentage;
-@Size(min=0,max=100)
-private double overallScore;
-private Timestamp calculatedAt;
- public Long getId() {
-        return id;
-    }
+@Table(name = "vendor_performance_scores")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class VendorPerformanceScore {
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public double getOnTimePercentage() {
-        return onTimePercentage;
-    }
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "vendor_id")
+    private Vendor vendor;
 
-    public void setOnTimePercentage(double onTimePercentage) {
-        this.onTimePercentage = onTimePercentage;
-    }
+    @Column(nullable = false)
+    private Double onTimePercentage;
 
-    public double getQualityCompliancePercentage() {
-        return qualityCompliancePercentage;
-    }
+    @Column(nullable = false)
+    private Double qualityCompliancePercentage;
 
-    public void setQualityCompliancePercentage(double qualityCompliancePercentage) {
-        this.qualityCompliancePercentage = qualityCompliancePercentage;
-    }
+    @Column(nullable = false)
+    private Double overallScore;
 
-    public double getOverallScore() {
-        return overallScore;
-    }
-
-    public void setOverallScore(double overallScore) {
-        this.overallScore = overallScore;
-    }
-
-    public Timestamp getCalculatedAt() {
-        return calculatedAt;
-    }
-
-    public void setCalculatedAt(Timestamp calculatedAt) {
-        this.calculatedAt = calculatedAt;
-    }
-    public VendorPerformanceScore(Long id, double onTimePercentage, double qualityCompliancePercentage, double overallScore, Timestamp calculatedAt){
- this.id = id;
-  this.onTimePercentage = onTimePercentage;
-  this.qualityCompliancePercentage = qualityCompliancePercentage;
-this.overallScore = overallScore;
-this.calculatedAt = calculatedAt;
-    }
-    public VendorPerformanceScore(){}
+    private Timestamp calculatedAt;
 }

@@ -1,70 +1,43 @@
 package com.example.demo.model;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-
-
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.time.LocalDate;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class DeliveryEvaluation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Min(value = 0, message = "actualDeliveryDays must be >= 0")
-    private int actualDeliveryDays;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "vendor_id")
+    private Vendor vendor;
 
-    @DecimalMin(value = "0.0", message = "qualityScore must be >= 0")
-    @DecimalMax(value = "1.0", message = "qualityScore must be <= 1")
-    private double qualityScore;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "sla_requirement_id")
+    private SLARequirement slaRequirement;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-private LocalDate evaluationDate;
+    private Integer actualDeliveryDays;
 
-    private boolean meetsDeliveryTarget;
+    private Double qualityScore;
 
-    private boolean meetsQualityTarget;
+    private LocalDate evaluationDate;
 
-    // Default constructor
-    public DeliveryEvaluation() {}
+    private Boolean meetsDeliveryTarget;
 
-    // Full constructor
-    public DeliveryEvaluation(Long id, int actualDeliveryDays, double qualityScore,
-                              LocalDate evaluationDate, boolean meetsDeliveryTarget,
-                              boolean meetsQualityTarget) {
-        this.id = id;
-        this.actualDeliveryDays = actualDeliveryDays;
-        this.qualityScore = qualityScore;
-        this.evaluationDate = evaluationDate;
-        this.meetsDeliveryTarget = meetsDeliveryTarget;
-        this.meetsQualityTarget = meetsQualityTarget;
-    }
-
-    // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public int getActualDeliveryDays() { return actualDeliveryDays; }
-    public void setActualDeliveryDays(int actualDeliveryDays) { this.actualDeliveryDays = actualDeliveryDays; }
-
-    public double getQualityScore() { return qualityScore; }
-    public void setQualityScore(double qualityScore) { this.qualityScore = qualityScore; }
-
-    public LocalDate getEvaluationDate() { return evaluationDate; }
-    public void setEvaluationDate(LocalDate evaluationDate) { this.evaluationDate = evaluationDate; }
-
-    public boolean isMeetsDeliveryTarget() { return meetsDeliveryTarget; }
-    public void setMeetsDeliveryTarget(boolean meetsDeliveryTarget) { this.meetsDeliveryTarget = meetsDeliveryTarget; }
-
-    public boolean isMeetsQualityTarget() { return meetsQualityTarget; }
-    public void setMeetsQualityTarget(boolean meetsQualityTarget) { this.meetsQualityTarget = meetsQualityTarget; }
+    private Boolean meetsQualityTarget;
 }
