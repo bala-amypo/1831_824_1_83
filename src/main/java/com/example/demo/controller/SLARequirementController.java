@@ -1,45 +1,48 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
-
 import com.example.demo.model.SLARequirement;
 import com.example.demo.service.SLARequirementService;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
 @RestController
-@RequestMapping("/slas")
+@RequestMapping("/api/sla-requirements")
 public class SLARequirementController {
 
-    @Autowired
-    private SLARequirementService service;
+    private final SLARequirementService service;
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
-                 produces = MediaType.APPLICATION_JSON_VALUE)
-    public SLARequirement createSLA(@RequestBody SLARequirement sla) {
-        return service.createSLA(sla);
+    public SLARequirementController(SLARequirementService service) {
+        this.service = service;
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public SLARequirement updateSLA(@PathVariable Long id,
-                                    @RequestBody SLARequirement sla) {
-        return service.updateSLA(id, sla);
+    @PostMapping
+    public SLARequirement create(@RequestBody SLARequirement slaRequirement) {
+        return service.createSLARequirement(slaRequirement);
     }
 
     @GetMapping("/{id}")
-    public SLARequirement getSLAById(@PathVariable Long id) {
-        return service.getSLAById(id);
+    public SLARequirement getById(@PathVariable Long id) {
+        return service.getSLARequirementById(id);
     }
 
     @GetMapping
-    public List<SLARequirement> getAllSLAs() {
-        return service.getAllSLAs();
+    public List<SLARequirement> getAll() {
+        return service.getAllSLARequirements();
     }
 
-    @PutMapping("/{id}/deactivate")
-    public void deactivateSLA(@PathVariable Long id) {
-        service.deactivateSLA(id);
+    @PutMapping("/{id}/status")
+    public SLARequirement updateStatus(
+            @PathVariable Long id,
+            @RequestParam Boolean active) {
+        return service.updateSLAStatus(id, active);
     }
 }

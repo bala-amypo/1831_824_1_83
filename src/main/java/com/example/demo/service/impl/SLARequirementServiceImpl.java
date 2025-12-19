@@ -1,54 +1,44 @@
 package com.example.demo.service.impl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.example.demo.model.SLARequirement;
 import com.example.demo.repository.SLARequirementRepository;
 import com.example.demo.service.SLARequirementService;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
 @Service
+@Transactional
 public class SLARequirementServiceImpl implements SLARequirementService {
 
-    @Autowired
-    private SLARequirementRepository repo;
+    private final SLARequirementRepository repo;
 
-    @Override
-    public SLARequirement createSLA(SLARequirement sla) {
-        if (repo.existsByRequirementName(sla.getRequirementName())) {
-            throw new RuntimeException("SLA already exists");
-        }
-        sla.setActive(true);
-        return repo.save(sla);
+    public SLARequirementServiceImpl(SLARequirementRepository repo) {
+        this.repo = repo;
     }
 
     @Override
-    public SLARequirement updateSLA(Long id, SLARequirement sla) {
-        SLARequirement existing = getSLAById(id);
-        existing.setRequirementName(sla.getRequirementName());
-        existing.setDescription(sla.getDescription());
-        existing.setMaxDeliveryDays(sla.getMaxDeliveryDays());
-        existing.setMinQualityScore(sla.getMinQualityScore());
-        return repo.save(existing);
+    public SLARequirement createSLARequirement(SLARequirement slaRequirement) {
+        return repo.save(slaRequirement);
     }
 
     @Override
-    public SLARequirement getSLAById(Long id) {
+    public SLARequirement getSLARequirementById(Long id) {
         return repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("SLA not found"));
+                .orElseThrow(() -> new RuntimeException("SLARequirement not found"));
     }
 
     @Override
-    public List<SLARequirement> getAllSLAs() {
+    public List<SLARequirement> getAllSLARequirements() {
         return repo.findAll();
     }
 
     @Override
-    public void deactivateSLA(Long id) {
-        SLARequirement sla = getSLAById(id);
-        sla.setActive(false);
-        repo.save(sla);
+    public SLARequirement updateSLAStatus(Long id, Boolean active) {
+        SLARequirement sla = getSLARequirementById(id);
+        sla.setActive(active);
+        return repo.save(sla);
     }
 }
