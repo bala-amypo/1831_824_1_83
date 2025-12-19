@@ -42,3 +42,9 @@
 //         return config.getAuthenticationManager();
 //     }
 // }
+DELETE FROM slarequirement WHERE id = 0;
+Reset the auto-increment counter so new inserts start from 1:
+
+sql
+Copy code
+ALTER TABLE slarequirement AUTO_INCREMENT = 1;
