@@ -10,36 +10,34 @@ import java.util.List;
 @RequestMapping("/api/delivery-evaluations")
 public class DeliveryEvaluationController {
 
-    private final DeliveryEvaluationService service;
+    private final DeliveryEvaluationService deliveryEvaluationService;
 
-    public DeliveryEvaluationController(DeliveryEvaluationService service) {
-        this.service = service;
+    public DeliveryEvaluationController(DeliveryEvaluationService deliveryEvaluationService) {
+        this.deliveryEvaluationService = deliveryEvaluationService;
     }
 
     @PostMapping
-    public DeliveryEvaluation create(@RequestBody DeliveryEvaluation evaluation) {
-        return service.createEvaluation(evaluation);
-    }
+    public DeliveryEvaluation createEvaluation(
+            @RequestParam Long vendorId,
+            @RequestParam Long slaRequirementId,
+            @RequestParam Integer actualDeliveryDays,
+            @RequestParam Double qualityScore) {
 
-    @GetMapping("/{id}")
-    public DeliveryEvaluation getById(@PathVariable Long id) {
-        return service.getEvaluationById(id);
+        return deliveryEvaluationService.createEvaluation(
+                vendorId,
+                slaRequirementId,
+                actualDeliveryDays,
+                qualityScore
+        );
     }
 
     @GetMapping
-    public List<DeliveryEvaluation> getAll() {
-        return service.getAllEvaluations();
+    public List<DeliveryEvaluation> getAllEvaluations() {
+        return deliveryEvaluationService.getAllEvaluations();
     }
 
-    @PutMapping("/{id}")
-    public DeliveryEvaluation update(
-            @PathVariable Long id,
-            @RequestBody DeliveryEvaluation evaluation) {
-        return service.updateEvaluation(id, evaluation);
-    }
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        service.deleteEvaluation(id);
+    @GetMapping("/{id}")
+    public DeliveryEvaluation getEvaluationById(@PathVariable Long id) {
+        return deliveryEvaluationService.getEvaluationById(id);
     }
 }
