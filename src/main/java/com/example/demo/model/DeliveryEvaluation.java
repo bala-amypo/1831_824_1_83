@@ -1,66 +1,105 @@
-package com.example.demo.model;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
+package com.example.demo.entity;
+
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "delivery_evaluation")
 public class DeliveryEvaluation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Min(value = 0, message = "actualDeliveryDays must be >= 0")
-    private int actualDeliveryDays;
+    @ManyToOne
+    @JoinColumn(name = "vendor_id", nullable = false)
+    private Vendor vendor;
 
-    @DecimalMin(value = "0.0", message = "qualityScore must be >= 0")
-    @DecimalMax(value = "1.0", message = "qualityScore must be <= 1")
-    private double qualityScore;
+    @ManyToOne
+    @JoinColumn(name = "sla_requirement_id", nullable = false)
+    private SLARequirement slaRequirement;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-private LocalDate evaluationDate;
+    @Column(nullable = false)
+    private Integer actualDeliveryDays;
 
-    private boolean meetsDeliveryTarget;
+    @Column(nullable = false)
+    private Double qualityScore;
 
-    private boolean meetsQualityTarget;
+    @Column(nullable = false)
+    private LocalDate evaluationDate;
 
-    // Default constructor
-    public DeliveryEvaluation() {}
+    @Column(nullable = false)
+    private Boolean meetsDeliveryTarget;
 
-    // Full constructor
-    public DeliveryEvaluation(Long id, int actualDeliveryDays, double qualityScore,
-                              LocalDate evaluationDate, boolean meetsDeliveryTarget,
-                              boolean meetsQualityTarget) {
-        this.id = id;
-        this.actualDeliveryDays = actualDeliveryDays;
-        this.qualityScore = qualityScore;
-        this.evaluationDate = evaluationDate;
-        this.meetsDeliveryTarget = meetsDeliveryTarget;
-        this.meetsQualityTarget = meetsQualityTarget;
+    @Column(nullable = false)
+    private Boolean meetsQualityTarget;
+
+    public DeliveryEvaluation() {
     }
 
-    // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // -------- Getters and Setters --------
 
-    public int getActualDeliveryDays() { return actualDeliveryDays; }
-    public void setActualDeliveryDays(int actualDeliveryDays) { this.actualDeliveryDays = actualDeliveryDays; }
+    public Long getId() {
+        return id;
+    }
 
-    public double getQualityScore() { return qualityScore; }
-    public void setQualityScore(double qualityScore) { this.qualityScore = qualityScore; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public LocalDate getEvaluationDate() { return evaluationDate; }
-    public void setEvaluationDate(LocalDate evaluationDate) { this.evaluationDate = evaluationDate; }
+    public Vendor getVendor() {
+        return vendor;
+    }
 
-    public boolean isMeetsDeliveryTarget() { return meetsDeliveryTarget; }
-    public void setMeetsDeliveryTarget(boolean meetsDeliveryTarget) { this.meetsDeliveryTarget = meetsDeliveryTarget; }
+    public void setVendor(Vendor vendor) {
+        this.vendor = vendor;
+    }
 
-    public boolean isMeetsQualityTarget() { return meetsQualityTarget; }
-    public void setMeetsQualityTarget(boolean meetsQualityTarget) { this.meetsQualityTarget = meetsQualityTarget; }
+    public SLARequirement getSlaRequirement() {
+        return slaRequirement;
+    }
+
+    public void setSlaRequirement(SLARequirement slaRequirement) {
+        this.slaRequirement = slaRequirement;
+    }
+
+    public Integer getActualDeliveryDays() {
+        return actualDeliveryDays;
+    }
+
+    public void setActualDeliveryDays(Integer actualDeliveryDays) {
+        this.actualDeliveryDays = actualDeliveryDays;
+    }
+
+    public Double getQualityScore() {
+        return qualityScore;
+    }
+
+    public void setQualityScore(Double qualityScore) {
+        this.qualityScore = qualityScore;
+    }
+
+    public LocalDate getEvaluationDate() {
+        return evaluationDate;
+    }
+
+    public void setEvaluationDate(LocalDate evaluationDate) {
+        this.evaluationDate = evaluationDate;
+    }
+
+    public Boolean getMeetsDeliveryTarget() {
+        return meetsDeliveryTarget;
+    }
+
+    public void setMeetsDeliveryTarget(Boolean meetsDeliveryTarget) {
+        this.meetsDeliveryTarget = meetsDeliveryTarget;
+    }
+
+    public Boolean getMeetsQualityTarget() {
+        return meetsQualityTarget;
+    }
+
+    public void setMeetsQualityTarget(Boolean meetsQualityTarget) {
+        this.meetsQualityTarget = meetsQualityTarget;
+    }
 }
