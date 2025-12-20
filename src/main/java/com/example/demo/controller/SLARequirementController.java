@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.SLARequirement;
 import com.example.demo.service.SLARequirementService;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,32 +12,29 @@ import java.util.List;
 @RequestMapping("/api/sla-requirements")
 public class SLARequirementController {
 
-    private final SLARequirementService service;
+    @Autowired
+    private SLARequirementService service;
 
-    public SLARequirementController(SLARequirementService service) {
-        this.service = service;
-    }
-
-    // ✅ CREATE
     @PostMapping
-    public ResponseEntity<SLARequirement> create(
-            @RequestBody SLARequirement slaRequirement) {
-        return ResponseEntity.ok(service.create(slaRequirement));
+    public ResponseEntity<SLARequirement> create(@RequestBody SLARequirement req) {
+        return ResponseEntity.ok(service.createRequirement(req));
     }
 
-    // ✅ GET BY ID
+    @PutMapping("/{id}")
+    public ResponseEntity<SLARequirement> update(@PathVariable Long id, @RequestBody SLARequirement req) {
+        return ResponseEntity.ok(service.updateRequirement(id, req));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<SLARequirement> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(service.getById(id));
+        return ResponseEntity.ok(service.getRequirementById(id));
     }
 
-    // ✅ GET ALL
     @GetMapping
     public ResponseEntity<List<SLARequirement>> getAll() {
-        return ResponseEntity.ok(service.getAll());
+        return ResponseEntity.ok(service.getAllRequirements());
     }
 
-    // ✅ DEACTIVATE (soft delete)
     @PutMapping("/{id}/deactivate")
     public ResponseEntity<SLARequirement> deactivate(@PathVariable Long id) {
         return ResponseEntity.ok(service.deactivateRequirement(id));
