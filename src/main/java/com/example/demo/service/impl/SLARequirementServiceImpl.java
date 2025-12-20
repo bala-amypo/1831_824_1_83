@@ -18,22 +18,17 @@ public class SLARequirementServiceImpl implements SLARequirementService {
     }
 
     @Override
-    public SLARequirement create(SLARequirement req) {
-
-        // ❌ REMOVED invalid null checks for int/double
-        // req.getMaxDeliveryDays() == null  ❌
-        // req.getMinQualityScore() == null  ❌
-
-        // Optional validation (VALID)
-        if (req.getMaxDeliveryDays() <= 0) {
+    public SLARequirement create(SLARequirement sla) {
+        // ❌ no null checks for int/double
+        if (sla.getMaxDeliveryDays() <= 0) {
             throw new IllegalArgumentException("Max delivery days must be > 0");
         }
 
-        if (req.getMinQualityScore() < 0 || req.getMinQualityScore() > 1) {
+        if (sla.getMinQualityScore() < 0 || sla.getMinQualityScore() > 1) {
             throw new IllegalArgumentException("Quality score must be between 0 and 1");
         }
 
-        return repository.save(req);
+        return repository.save(sla);
     }
 
     @Override
@@ -48,10 +43,11 @@ public class SLARequirementServiceImpl implements SLARequirementService {
     }
 
     @Override
-    public List<SLARequirement> getActiveSlas() {
-        return repository.findAll()
-                .stream()
-                .filter(SLARequirement::isActive) // ✅ FIXED
-                .toList();
+    public SLARequirement deactivateRequirement(Long id) {
+        SLARequirement sla = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("SLA Requirement not found"));
+
+        sla.setActive(false);
+        return repository.save(sla);
     }
 }
