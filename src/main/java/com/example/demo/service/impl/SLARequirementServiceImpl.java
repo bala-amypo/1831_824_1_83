@@ -1,24 +1,24 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.SLARequirement;
-import com.example.demo.repository.SlaRequirementRepository;
-import com.example.demo.service.SlaRequirementService;
+import com.example.demo.repository.SLARequirementRepository;
+import com.example.demo.service.SLARequirementService;
 
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SlaRequirementServiceImpl implements SlaRequirementService {
+public class SLARequirementServiceImpl implements SLARequirementService {
 
-    private final SlaRequirementRepository repository;
+    private final SLARequirementRepository repository;
 
-    public SlaRequirementServiceImpl(SlaRequirementRepository repository) {
+    public SLARequirementServiceImpl(SLARequirementRepository repository) {
         this.repository = repository;
     }
 
     @Override
-    public SlaRequirement create(SlaRequirement req) {
+    public SLARequirement create(SLARequirement req) {
 
         // ❌ REMOVED invalid null checks for int/double
         // req.getMaxDeliveryDays() == null  ❌
@@ -37,21 +37,21 @@ public class SlaRequirementServiceImpl implements SlaRequirementService {
     }
 
     @Override
-    public List<SlaRequirement> getAll() {
+    public List<SLARequirement> getAll() {
         return repository.findAll();
     }
 
     @Override
-    public SlaRequirement getById(Long id) {
+    public SLARequirement getById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("SLA Requirement not found"));
     }
 
     @Override
-    public List<SlaRequirement> getActiveSlas() {
+    public List<SLARequirement> getActiveSlas() {
         return repository.findAll()
                 .stream()
-                .filter(SlaRequirement::isActive) // ✅ FIXED
+                .filter(SLARequirement::isActive) // ✅ FIXED
                 .toList();
     }
 }
