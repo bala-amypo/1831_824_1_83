@@ -1,18 +1,18 @@
-// package com.example.demo.service;
+package com.example.demo.service;
 
-// import com.example.demo.model.DeliveryEvaluation;
-// import java.util.List;
+import com.example.demo.model.DeliveryEvaluation;
+import java.util.List;
 
-// public interface DeliveryEvaluationService {
+public interface DeliveryEvaluationService {
 
-//     DeliveryEvaluation createEvaluation(
-//             Long vendorId,
-//             Long slaRequirementId,
-//             Integer actualDeliveryDays,
-//             Double qualityScore
-//     );
+    DeliveryEvaluation createEvaluation(
+            Long vendorId,
+            Long slaRequirementId,
+            Integer actualDeliveryDays,
+            Double qualityScore
+    );
 
-//     List<DeliveryEvaluation> getAllEvaluations();
+    List<DeliveryEvaluation> getAllEvaluations();
 
-//     DeliveryEvaluation getEvaluationById(Long id);
-// }
+    DeliveryEvaluation getEvaluationById(Long id);
+}
