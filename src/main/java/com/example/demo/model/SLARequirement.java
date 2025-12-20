@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "slarequirement")
-public class SlaRequirement {
+public class SLARequirement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
