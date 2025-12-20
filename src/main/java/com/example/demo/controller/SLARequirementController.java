@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.model.SLARequirement;
 import com.example.demo.service.SLARequirementService;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,48 +14,32 @@ public class SLARequirementController {
 
     private final SLARequirementService service;
 
-    // Constructor Injection
     public SLARequirementController(SLARequirementService service) {
         this.service = service;
     }
 
-    // ---------------- CREATE ----------------
-    // POST /
+    // ✅ CREATE
     @PostMapping
-    public SLARequirement createRequirement(
-            @RequestBody SLARequirement req) {
-        return service.createRequirement(req);
+    public ResponseEntity<SLARequirement> create(
+            @RequestBody SLARequirement slaRequirement) {
+        return ResponseEntity.ok(service.create(slaRequirement));
     }
 
-    // ---------------- UPDATE ----------------
-    // PUT /{id}
-    @PutMapping("/{id}")
-    public SLARequirement updateRequirement(
-            @PathVariable Long id,
-            @RequestBody SLARequirement req) {
-        return service.updateRequirement(id, req);
-    }
-
-    // ---------------- GET BY ID ----------------
-    // GET /{id}
+    // ✅ GET BY ID
     @GetMapping("/{id}")
-    public SLARequirement getRequirementById(
-            @PathVariable Long id) {
-        return service.getRequirementById(id);
+    public ResponseEntity<SLARequirement> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getById(id));
     }
 
-    // ---------------- GET ALL ----------------
-    // GET /
+    // ✅ GET ALL
     @GetMapping
-    public List<SLARequirement> getAllRequirements() {
-        return service.getAllRequirements();
+    public ResponseEntity<List<SLARequirement>> getAll() {
+        return ResponseEntity.ok(service.getAll());
     }
 
-    // ---------------- DEACTIVATE ----------------
-    // PUT /{id}/deactivate
+    // ✅ DEACTIVATE (soft delete)
     @PutMapping("/{id}/deactivate")
-    public void deactivateRequirement(
-            @PathVariable Long id) {
-        service.deactivateRequirement(id);
+    public ResponseEntity<SLARequirement> deactivate(@PathVariable Long id) {
+        return ResponseEntity.ok(service.deactivateRequirement(id));
     }
 }
