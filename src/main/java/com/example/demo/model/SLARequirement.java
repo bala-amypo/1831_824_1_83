@@ -13,12 +13,13 @@ public class SLARequirement {
     private String requirementName;
     private String description;
 
-    private int maxDeliveryDays;
-    private double minQualityScore;
+    private Integer maxDeliveryDays;      // ✅ wrapper
+    private Double minQualityScore;        // ✅ wrapper
 
-    private boolean active = true;
+    private Boolean active;                // ✅ wrapper
 
-    // getters & setters
+    // ---- getters & setters ----
+
     public Long getId() {
         return id;
     }
@@ -39,27 +40,27 @@ public class SLARequirement {
         this.description = description;
     }
 
-    public int getMaxDeliveryDays() {
+    public Integer getMaxDeliveryDays() {
         return maxDeliveryDays;
     }
 
-    public void setMaxDeliveryDays(int maxDeliveryDays) {
+    public void setMaxDeliveryDays(Integer maxDeliveryDays) {
         this.maxDeliveryDays = maxDeliveryDays;
     }
 
-    public double getMinQualityScore() {
+    public Double getMinQualityScore() {
         return minQualityScore;
     }
 
-    public void setMinQualityScore(double minQualityScore) {
+    public void setMinQualityScore(Double minQualityScore) {
         this.minQualityScore = minQualityScore;
     }
 
-    public boolean isActive() {          // ✅ boolean getter
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 }
