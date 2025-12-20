@@ -1,10 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.DeliveryEvaluation;
-import com.example.demo.model.SlaRequirement;
+import com.example.demo.model.SLARequirement;
 import com.example.demo.model.Vendor;
 import com.example.demo.repository.DeliveryEvaluationRepository;
-import com.example.demo.repository.SlaRequirementRepository;
+import com.example.demo.repository.SLARequirementRepository;
 import com.example.demo.repository.VendorRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class DeliveryEvaluationController {
     private VendorRepository vendorRepository;
 
     @Autowired
-    private SlaRequirementRepository slaRequirementRepository;
+    private SLARequirementRepository slaRequirementRepository;
 
     // GET all delivery evaluations
     @GetMapping
@@ -47,7 +47,7 @@ public class DeliveryEvaluationController {
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Vendor not found"));
 
-        SlaRequirement slaRequirement = slaRequirementRepository.findById(slaRequirementId)
+        SLARequirement slaRequirement = slaRequirementRepository.findById(slaRequirementId)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "SLA Requirement not found"));
 
