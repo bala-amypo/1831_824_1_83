@@ -1,43 +1,68 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.DeliveryEvaluation;
-import com.example.demo.service.DeliveryEvaluationService;
-import org.springframework.web.bind.annotation.*;
+import com.example.demo.model.SlaRequirement;
+import com.example.demo.model.Vendor;
+import com.example.demo.repository.DeliveryEvaluationRepository;
+import com.example.demo.repository.SlaRequirementRepository;
+import com.example.demo.repository.VendorRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/delivery-evaluations")
 public class DeliveryEvaluationController {
 
-    private final DeliveryEvaluationService deliveryEvaluationService;
+    @Autowired
+    private DeliveryEvaluationRepository deliveryEvaluationRepository;
 
-    public DeliveryEvaluationController(DeliveryEvaluationService deliveryEvaluationService) {
-        this.deliveryEvaluationService = deliveryEvaluationService;
-    }
+    @Autowired
+    private VendorRepository vendorRepository;
 
-    @PostMapping
-    public DeliveryEvaluation createEvaluation(
-            @RequestParam Long vendorId,
-            @RequestParam Long slaRequirementId,
-            @RequestParam Integer actualDeliveryDays,
-            @RequestParam Double qualityScore) {
+    @Autowired
+    private SlaRequirementRepository slaRequirementRepository;
 
-        return deliveryEvaluationService.createEvaluation(
-                vendorId,
-                slaRequirementId,
-                actualDeliveryDays,
-                qualityScore
-        );
-    }
-
+    // GET all delivery evaluations
     @GetMapping
     public List<DeliveryEvaluation> getAllEvaluations() {
-        return deliveryEvaluationService.getAllEvaluations();
+        return deliveryEvaluationRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public DeliveryEvaluation getEvaluationById(@PathVariable Long id) {
-        return deliveryEvaluationService.getEvaluationById(id);
+    // POST create delivery evaluation (FIXED)
+    @PostMapping
+    public ResponseEntity<DeliveryEvaluation> createEvaluation(
+            @RequestParam Long vendorId,
+            @RequestParam Long slaRequirementId,
+            @RequestParam int actualDeliveryDays,
+            @RequestParam double qualityScore) {
+
+        Vendor vendor = vendorRepository.findById(vendorId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Vendor not found"));
+
+        SlaRequirement slaRequirement = slaRequirementRepository.findById(slaRequirementId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "SLA Requirement not found"));
+
+        DeliveryEvaluation evaluation = new DeliveryEvaluation();
+        evaluation.setVendor(vendor);
+        evaluation.setSlaRequirement(slaRequirement);
+        evaluation.setActualDeliveryDays(actualDeliveryDays);
+        evaluation.setQualityScore(qualityScore);
+        evaluation.setEvaluationDate(LocalDate.now());
+
+        evaluation.setMeetsDeliveryTarget(
+                actualDeliveryDays <= slaRequirement.getMaxDeliveryDays());
+        evaluation.setMeetsQualityTarget(
+                qualityScore >= slaRequirement.getMinQualityScore());
+
+        return ResponseEntity.ok(deliveryEvaluationRepository.save(evaluation));
     }
 }
