@@ -44,5 +44,3 @@
 // // }
 
 // id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY
-SELECT id, active+0 AS active FROM vendor WHERE id = 1;
-SELECT id, active+0 AS active FROM sla_requirement WHERE id = 1;
