@@ -88,4 +88,14 @@ public class DeliveryEvaluation {
     public void setMeetsQualityTarget(Boolean meetsQualityTarget) {
          this.meetsQualityTarget = meetsQualityTarget;
           }
+           public DeliveryEvaluation(Integer actualDeliveryDays, Long id, Boolean meetsDeliveryTarget, Boolean meetsQualityTarget, Double qualityScore, SLARequirement slaRequirement, Vendor vendor) {
+        this.actualDeliveryDays = actualDeliveryDays;
+        this.id = id;
+        this.meetsDeliveryTarget = meetsDeliveryTarget;
+        this.meetsQualityTarget = meetsQualityTarget;
+        this.qualityScore = qualityScore;
+        this.slaRequirement = slaRequirement;
+        this.vendor = vendor;
+    }
+    DeliveryEvaluation()   
 }
