@@ -89,5 +89,5 @@ public class VendorPerformanceScore {
         this.overallScore = overallScore;
         this.calculatedAt = calculatedAt;
     }
-
+      public VendorPerformanceScore() {}
 }

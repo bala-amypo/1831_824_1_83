@@ -1,6 +1,10 @@
 package com.example.demo.model;
-
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "vendor_tier")
@@ -22,7 +26,6 @@ public class VendorTier {
     @Column(nullable = false)
     private Boolean active = true;
 
-    // Getters & Setters
     public Long getId() {
         return id;
     }
@@ -62,4 +65,12 @@ public class VendorTier {
     public void setActive(Boolean active) {
         this.active = active;
     }
+        public VendorTier(Long id, String tierName, Double minScoreThreshold, String description, Boolean active) {
+        this.id = id;
+        this.tierName = tierName;
+        this.minScoreThreshold = minScoreThreshold;
+        this.description = description;
+        this.active = active;
+    }
+     public VendorTier() {}
 }
