@@ -1,9 +1,7 @@
 package com.example.demo.controller;
-
 import com.example.demo.model.VendorPerformanceScore;
 import com.example.demo.service.VendorPerformanceScoreService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
