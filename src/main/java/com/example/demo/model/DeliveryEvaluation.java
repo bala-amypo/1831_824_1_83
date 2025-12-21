@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
 import java.time.LocalDate;
 
 @Entity
@@ -40,28 +39,6 @@ public class DeliveryEvaluation {
 
     @Column(name = "meets_quality_target")
     private Boolean meetsQualityTarget;
-
-    public DeliveryEvaluation() {
-    }
-
-    public DeliveryEvaluation(
-            Long id,
-            Vendor vendor,
-            SLARequirement slaRequirement,
-            Integer actualDeliveryDays,
-            Double qualityScore,
-            Boolean meetsDeliveryTarget,
-            Boolean meetsQualityTarget
-    ) {
-        this.id = id;
-        this.vendor = vendor;
-        this.slaRequirement = slaRequirement;
-        this.actualDeliveryDays = actualDeliveryDays;
-        this.qualityScore = qualityScore;
-        this.meetsDeliveryTarget = meetsDeliveryTarget;
-        this.meetsQualityTarget = meetsQualityTarget;
-    }
-
 
     public Long getId() {
         return id;
@@ -126,4 +103,17 @@ public class DeliveryEvaluation {
     public void setMeetsQualityTarget(Boolean meetsQualityTarget) {
         this.meetsQualityTarget = meetsQualityTarget;
     }
+        public DeliveryEvaluation(Integer actualDeliveryDays,Long id, Boolean meetsDeliveryTarget, Boolean meetsQualityTarget, Double qualityScore, SLARequirement slaRequirement, Vendor vendor) {
+        this.actualDeliveryDays = actualDeliveryDays;
+        this.id = id;
+        this.meetsDeliveryTarget = meetsDeliveryTarget;
+        this.meetsQualityTarget = meetsQualityTarget;
+        this.qualityScore = qualityScore;
+        this.slaRequirement = slaRequirement;
+        this.vendor = vendor;
+    }
+
+    public DeliveryEvaluation() {}
+    
+
 }
