@@ -1,35 +1,29 @@
-package com.example.demo.controller;
+package com.yourpackage.vendortracker.controller;
 
-import com.example.demo.model.DeliveryEvaluation;
-import com.example.demo.service.DeliveryEvaluationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.yourpackage.vendortracker.dto.EvaluationRequest;
+import com.yourpackage.vendortracker.model.DeliveryEvaluation;
+import com.yourpackage.vendortracker.service.DeliveryEvaluationService;
+
+import io.swagger.v3.oas.annotations.Operation;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/evaluations")
 public class DeliveryEvaluationController {
 
-    @Autowired
-    private DeliveryEvaluationService evaluationService;
+    private final DeliveryEvaluationService service;
 
+    public DeliveryEvaluationController(DeliveryEvaluationService service) {
+        this.service = service;
+    }
+
+    @Operation(summary = "Create delivery evaluation")
     @PostMapping
-    public DeliveryEvaluation createEvaluation(@RequestBody DeliveryEvaluation evaluation) {
-        return evaluationService.createEvaluation(evaluation);
-    }
+    public ResponseEntity<DeliveryEvaluation> createEvaluation(
+            @RequestBody EvaluationRequest request) {
 
-    @GetMapping("/{id}")
-    public DeliveryEvaluation getEvaluationById(@PathVariable Long id) {
-        return evaluationService.getEvaluationById(id);
-    }
-
-    @GetMapping("/vendor/{vendorId}")
-    public List<DeliveryEvaluation> getEvaluationsForVendor(@PathVariable Long vendorId) {
-        return evaluationService.getEvaluationsForVendor(vendorId);
-    }
-
-    @GetMapping("/requirement/{requirementId}")
-    public List<DeliveryEvaluation> getEvaluationsForRequirement(@PathVariable Long requirementId) {
-        return evaluationService.getEvaluationsForRequirement(requirementId);
+        return ResponseEntity.ok(service.createEvaluation(request));
     }
 }
