@@ -6,7 +6,5 @@ import java.util.List;
 import java.util.Optional;
 public interface VendorPerformanceScoreRepository extends JpaRepository<VendorPerformanceScore, Long> {
     Optional<VendorPerformanceScore> findTopByVendorOrderByCalculatedAtDesc(Vendor vendor);
-
-    List<VendorPerformanceScore>
-        findByVendorOrderByCalculatedAtDesc(Vendor vendor);
+    List<VendorPerformanceScore> findByVendorOrderByCalculatedAtDesc(Vendor vendor);
 }

@@ -1,11 +1,9 @@
 package com.example.demo.service.impl;
-
 import com.example.demo.model.SLARequirement;
 import com.example.demo.repository.SLARequirementRepository;
 import com.example.demo.service.SLARequirementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -17,17 +15,15 @@ public class SLARequirementServiceImpl implements SLARequirementService {
 
     @Override
     public SLARequirement createRequirement(SLARequirement req) {
-        // Validation
         if (req.getMaxDeliveryDays() <= 0) throw new IllegalArgumentException("maxDeliveryDays must be > 0");
         if (req.getMinQualityScore() < 0 || req.getMinQualityScore() > 100)
             throw new IllegalArgumentException("minQualityScore must be 0-100");
 
-        // Check duplicate name
         Optional<SLARequirement> existing = repository.findByRequirementName(req.getRequirementName());
         if (existing.isPresent()) throw new IllegalArgumentException("Requirement name already exists");
 
         if (req.getActive() == null) req.setActive(true);
-        req.setId(null); // Ensure new insert
+        req.setId(null); 
         return repository.save(req);
     }
 
@@ -36,7 +32,6 @@ public class SLARequirementServiceImpl implements SLARequirementService {
         SLARequirement existing = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Requirement not found"));
 
-        // Duplicate name check
         Optional<SLARequirement> byName = repository.findByRequirementName(req.getRequirementName());
         if (byName.isPresent() && !byName.get().getId().equals(id))
             throw new IllegalArgumentException("Requirement name already exists");

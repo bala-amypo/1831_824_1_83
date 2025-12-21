@@ -1,5 +1,4 @@
 package com.example.demo.service.impl;
-
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
@@ -7,9 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
-
     private final UserRepository repository;
-
     public UserServiceImpl(UserRepository repository) {
         this.repository = repository;
     }
@@ -27,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
         User user = new User();
         user.setEmail(email);
-        user.setPassword(password); // plain text for now
+        user.setPassword(password); 
         user.setRole(role);
 
         return repository.save(user);

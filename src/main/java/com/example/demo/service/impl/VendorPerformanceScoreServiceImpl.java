@@ -1,12 +1,10 @@
 package com.example.demo.service.impl;
-
 import com.example.demo.model.Vendor;
 import com.example.demo.model.VendorPerformanceScore;
 import com.example.demo.repository.VendorPerformanceScoreRepository;
 import com.example.demo.repository.VendorRepository;
 import com.example.demo.service.VendorPerformanceScoreService;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -30,11 +28,9 @@ public class VendorPerformanceScoreServiceImpl
         Vendor vendor = vendorRepository.findById(vendorId)
                 .orElseThrow(() -> new RuntimeException("Vendor not found"));
 
-        // TEMP calculation (since DeliveryEvaluation is skipped)
         double onTime = 80.0;
         double quality = 90.0;
 
-        // weights: 50% + 50%
         double overall = (onTime * 0.5) + (quality * 0.5);
 
         VendorPerformanceScore score = new VendorPerformanceScore();

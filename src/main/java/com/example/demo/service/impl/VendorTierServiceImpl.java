@@ -1,10 +1,8 @@
 package com.example.demo.service.impl;
-
 import com.example.demo.model.VendorTier;
 import com.example.demo.repository.VendorTierRepository;
 import com.example.demo.service.VendorTierService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
