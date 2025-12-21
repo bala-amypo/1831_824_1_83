@@ -1,68 +1,65 @@
-// package com.example.demo.model;
-// import jakarta.persistence.Entity;
-// import jakarta.persistence.Id;
-// import jakarta.persistence.GeneratedValue;
-// import jakarta.persistence.GenerationType;
-// import jakarta.validation.constraints.Size;
-// import jakarta.persistence.Column;
-// @Entity
-// public class VendorTier{
-//     @Id
-//     @GeneratedValue(strategy=GenerationType.IDENTITY)
-//     private Long id;
-//      @Column(unique=true)
-//      private String tierName;
-//      @Size(min=0,max=100)
-//      private double minScoreThreshold;
-//      private String description;
-//      private boolean active = true;
+package com.example.demo.model;
 
-//     public Long getId() {
-//         return id;
-//     }
+import jakarta.persistence.*;
 
-//     public void setId(Long id) {
-//         this.id = id;
-//     }
+@Entity
+@Table(name = "vendor_tier")
+public class VendorTier {
 
-//     public String getTierName() {
-//         return tierName;
-//     }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-//     public void setTierName(String tierName) {
-//         this.tierName = tierName;
-//     }
+    @Column(name = "tier_name", unique = true, nullable = false)
+    private String tierName;
 
-//     public double getMinScoreThreshold() {
-//         return minScoreThreshold;
-//     }
+    @Column(name = "min_score_threshold", nullable = false)
+    private Double minScoreThreshold;
 
-//     public void setMinScoreThreshold(double minScoreThreshold) {
-//         this.minScoreThreshold = minScoreThreshold;
-//     }
+    @Column(nullable = false)
+    private String description;
 
-//     public String getDescription() {
-//         return description;
-//     }
+    @Column(nullable = false)
+    private Boolean active = true;
 
-//     public void setDescription(String description) {
-//         this.description = description;
-//     }
+    // Getters & Setters
+    public Long getId() {
+        return id;
+    }
 
-//     public boolean isActive() {
-//         return active;
-//     }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-//     public void setActive(boolean active) {
-//         this.active = active;
-//     }
-//  public VendorTier(Long id, String tierName,  double minScoreThreshold, String description,
-//             boolean active) {
-//         this.id = id;
-//         this.tierName = tierName;
-//         this.minScoreThreshold = minScoreThreshold;
-//         this.description = description;
-//         this.active = active;
-//      }
-//      public VendorTier(){}
-// }
+    public String getTierName() {
+        return tierName;
+    }
+
+    public void setTierName(String tierName) {
+        this.tierName = tierName;
+    }
+
+    public Double getMinScoreThreshold() {
+        return minScoreThreshold;
+    }
+
+    public void setMinScoreThreshold(Double minScoreThreshold) {
+        this.minScoreThreshold = minScoreThreshold;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+}
