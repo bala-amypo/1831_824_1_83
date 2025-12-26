@@ -1,47 +1,53 @@
-// package com.example.demo.security;
+package com.example.demo.security;
 
-// import io.jsonwebtoken.*;
-// import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
-// import java.security.Key;
-// import java.util.Date;
+import java.util.Date;
 
-// public class JwtTokenProvider {
+public class JwtTokenProvider {
 
-//     private final Key key;
-//     private final long validityInMs;
+    private final String secret;
+    private final long validityInMs;
 
-//     // REQUIRED constructor (for test cases)
-//     public JwtTokenProvider(String secret, long validityInMs) {
-//         this.key = Keys.hmacShaKeyFor(secret.getBytes());
-//         this.validityInMs = validityInMs;
-//     }
+    // 🚨 REQUIRED constructor (tests expect this EXACT signature)
+    public JwtTokenProvider(String secret, long validityInMs) {
+        this.secret = secret;
+        this.validityInMs = validityInMs;
+    }
 
-//     public String createToken(String email, String role) {
+    // ✅ Generate token
+    public String createToken(String subject) {
 
-//         Claims claims = Jwts.claims().setSubject(email);
-//         claims.put("role", role);
+        Date now = new Date();
+        Date expiry = new Date(now.getTime() + validityInMs);
 
-//         Date now = new Date();
-//         Date expiry = new Date(now.getTime() + validityInMs);
+        return Jwts.builder()
+                .setSubject(subject)
+                .setIssuedAt(now)
+                .setExpiration(expiry)
+                .signWith(SignatureAlgorithm.HS256, secret)
+                .compact();
+    }
 
-//         return Jwts.builder()
-//                 .setClaims(claims)
-//                 .setIssuedAt(now)
-//                 .setExpiration(expiry)
-//                 .signWith(key, SignatureAlgorithm.HS256)
-//                 .compact();
-//     }
+    // ✅ Validate token
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
-//     public boolean validateToken(String token) {
-//         try {
-//             Jwts.parserBuilder()
-//                 .setSigningKey(key)
-//                 .build()
-//                 .parseClaimsJws(token);
-//             return true;
-//         } catch (JwtException | IllegalArgumentException e) {
-//             return false;
-//         }
-//     }
-// }
+    // ✅ Extract subject (email / username)
+    public String getSubject(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getSubject();
+    }
+}
