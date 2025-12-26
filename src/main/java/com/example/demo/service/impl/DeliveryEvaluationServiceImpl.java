@@ -3,17 +3,19 @@ package com.example.demo.service.impl;
 import com.example.demo.model.*;
 import com.example.demo.repository.*;
 import com.example.demo.service.DeliveryEvaluationService;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
+@Service  // ✅ THIS WAS MISSING
 public class DeliveryEvaluationServiceImpl implements DeliveryEvaluationService {
 
     private final DeliveryEvaluationRepository evaluationRepository;
     private final VendorRepository vendorRepository;
     private final SLARequirementRepository slaRequirementRepository;
 
-    // 🚨 EXACT constructor order required by test suite
+    // 🚨 EXACT constructor order (tests depend on this)
     public DeliveryEvaluationServiceImpl(
             DeliveryEvaluationRepository evaluationRepository,
             VendorRepository vendorRepository,
@@ -56,8 +58,6 @@ public class DeliveryEvaluationServiceImpl implements DeliveryEvaluationService 
         evaluation.setVendor(vendor);
         evaluation.setSlaRequirement(sla);
         evaluation.setEvaluationDate(new Date());
-
-        // ✅ FIXED: using setters
         evaluation.setMeetsDeliveryTarget(meetsDelivery);
         evaluation.setMeetsQualityTarget(meetsQuality);
 
