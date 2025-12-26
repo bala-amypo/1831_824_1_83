@@ -99,17 +99,25 @@ public class VendorPerformanceScore {
 
     private Long id;
     private Vendor vendor;
+
     private Double onTimePercentage;
     private Double qualityCompliancePercentage;
     private Double overallScore;
+
+    private VendorTier vendorTier;
     private LocalDateTime calculatedAt;
 
-    public VendorPerformanceScore() {}
+    // ✅ Required no-args constructor
+    public VendorPerformanceScore() {
+    }
 
-    public VendorPerformanceScore(Vendor vendor,
-                                  Double onTimePercentage,
-                                  Double qualityCompliancePercentage,
-                                  Double overallScore) {
+    // ✅ Constructor USED BY TESTS
+    public VendorPerformanceScore(
+            Vendor vendor,
+            Double onTimePercentage,
+            Double qualityCompliancePercentage,
+            Double overallScore
+    ) {
         this.vendor = vendor;
         this.onTimePercentage = onTimePercentage;
         this.qualityCompliancePercentage = qualityCompliancePercentage;
@@ -117,28 +125,65 @@ public class VendorPerformanceScore {
         this.calculatedAt = LocalDateTime.now();
     }
 
-    public VendorPerformanceScore(Long id, Vendor vendor,
-                                  Double onTimePercentage,
-                                  Double qualityCompliancePercentage,
-                                  Double overallScore,
-                                  LocalDateTime calculatedAt) {
+    // ---------------- GETTERS ----------------
+
+    public Long getId() {
+        return id;
+    }
+
+    public Vendor getVendor() {
+        return vendor;
+    }
+
+    public Double getOnTimePercentage() {
+        return onTimePercentage;
+    }
+
+    public Double getQualityCompliancePercentage() {
+        return qualityCompliancePercentage;
+    }
+
+    public Double getOverallScore() {
+        return overallScore;
+    }
+
+    public VendorTier getVendorTier() {
+        return vendorTier;
+    }
+
+    public LocalDateTime getCalculatedAt() {
+        return calculatedAt;
+    }
+
+    // ---------------- SETTERS (🔥 THESE FIX YOUR ERROR) ----------------
+
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setVendor(Vendor vendor) {
         this.vendor = vendor;
+    }
+
+    public void setOnTimePercentage(Double onTimePercentage) {
         this.onTimePercentage = onTimePercentage;
+    }
+
+    public void setQualityCompliancePercentage(Double qualityCompliancePercentage) {
         this.qualityCompliancePercentage = qualityCompliancePercentage;
+    }
+
+    public void setOverallScore(Double overallScore) {
         this.overallScore = overallScore;
+    }
+
+    // 🔴 THIS WAS MISSING
+    public void setCalculatedAt(LocalDateTime calculatedAt) {
         this.calculatedAt = calculatedAt;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public Vendor getVendor() { return vendor; }
-    public void setVendor(Vendor vendor) { this.vendor = vendor; }
-
-    public Double getOnTimePercentage() { return onTimePercentage; }
-    public Double getQualityCompliancePercentage() { return qualityCompliancePercentage; }
-    public Double getOverallScore() { return overallScore; }
-
-    public LocalDateTime getCalculatedAt() { return calculatedAt; }
+    // 🔴 THIS WAS MISSING
+    public void setVendorTier(VendorTier vendorTier) {
+        this.vendorTier = vendorTier;
+    }
 }
