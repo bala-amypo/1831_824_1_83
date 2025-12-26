@@ -115,7 +115,6 @@ public class DeliveryEvaluation {
 
     public DeliveryEvaluation() {}
 
-    // REQUIRED by tests
     public DeliveryEvaluation(Vendor v, SLARequirement s, Integer days, Double score, LocalDate date) {
         this.vendor = v;
         this.slaRequirement = s;
@@ -124,8 +123,9 @@ public class DeliveryEvaluation {
         this.evaluationDate = date;
     }
 
-    // getters & setters
+    public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
     public Vendor getVendor() { return vendor; }
     public void setVendor(Vendor vendor) { this.vendor = vendor; }
 
@@ -144,5 +144,11 @@ public class DeliveryEvaluation {
     public Boolean getMeetsQualityTarget() { return meetsQualityTarget; }
     public void setMeetsQualityTarget(Boolean meetsQualityTarget) { this.meetsQualityTarget = meetsQualityTarget; }
 
-    public void setEvaluationDate(LocalDate evaluationDate) { this.evaluationDate = evaluationDate; }
+    public LocalDate getEvaluationDate() {   // ✅ REQUIRED
+        return evaluationDate;
+    }
+
+    public void setEvaluationDate(LocalDate evaluationDate) {
+        this.evaluationDate = evaluationDate;
+    }
 }
