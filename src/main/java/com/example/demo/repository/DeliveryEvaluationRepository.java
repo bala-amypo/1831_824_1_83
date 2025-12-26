@@ -28,16 +28,24 @@ import com.example.demo.model.SLARequirement;
 import com.example.demo.model.Vendor;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface DeliveryEvaluationRepository {
 
     DeliveryEvaluation save(DeliveryEvaluation evaluation);
 
+    Optional<DeliveryEvaluation> findById(Long id);   // ✅ ADD THIS
+
     List<DeliveryEvaluation> findByVendorId(Long vendorId);
 
     List<DeliveryEvaluation> findBySlaRequirementId(Long slaRequirementId);
 
-    List<DeliveryEvaluation> findHighQualityDeliveries(Vendor vendor, Double minQualityScore);
+    List<DeliveryEvaluation> findHighQualityDeliveries(
+            Vendor vendor,
+            Double minQualityScore
+    );
 
-    List<DeliveryEvaluation> findOnTimeDeliveries(SLARequirement slaRequirement);
+    List<DeliveryEvaluation> findOnTimeDeliveries(
+            SLARequirement slaRequirement
+    );
 }

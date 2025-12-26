@@ -41,7 +41,7 @@
 //         return http.build();
 //     }
 // }
-package com.example.demo.security;
+package com.example.demo.config;
 
 /**
  * Dummy security config.
