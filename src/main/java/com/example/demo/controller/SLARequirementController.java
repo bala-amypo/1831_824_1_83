@@ -42,14 +42,9 @@ package com.example.demo.controller;
 
 import com.example.demo.model.SLARequirement;
 import com.example.demo.service.SLARequirementService;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/sla-requirements")
-@Tag(name = "SLA Requirements")
 public class SLARequirementController {
 
     private final SLARequirementService service;
@@ -58,24 +53,23 @@ public class SLARequirementController {
         this.service = service;
     }
 
-    @PostMapping
-    public SLARequirement create(@RequestBody SLARequirement req) {
+    public SLARequirement create(SLARequirement req) {
         return service.createRequirement(req);
     }
 
-    @GetMapping("/{id}")
-    public SLARequirement getById(@PathVariable Long id) {
+    public SLARequirement update(Long id, SLARequirement req) {
+        return service.updateRequirement(id, req);
+    }
+
+    public SLARequirement getById(Long id) {
         return service.getRequirementById(id);
     }
 
-    @GetMapping
     public List<SLARequirement> getAll() {
         return service.getAllRequirements();
     }
 
-    // ✅ FIXED: no updateRequirement exists in service
-    @PutMapping("/{id}/deactivate")
-    public void deactivate(@PathVariable Long id) {
+    public void deactivate(Long id) {
         service.deactivateRequirement(id);
     }
 }
