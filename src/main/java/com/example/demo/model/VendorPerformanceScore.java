@@ -93,52 +93,27 @@
 // }
 package com.example.demo.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
 public class VendorPerformanceScore {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
     private Vendor vendor;
-
     private Double onTimePercentage;
     private Double qualityCompliancePercentage;
     private Double overallScore;
-
     private LocalDateTime calculatedAt = LocalDateTime.now();
 
     public VendorPerformanceScore() {}
 
-    // ✅ used in many tests
-    public VendorPerformanceScore(Vendor vendor,
-                                  Double onTime,
-                                  Double quality,
-                                  Double overall) {
-        this.vendor = vendor;
+    public VendorPerformanceScore(Vendor v, Double onTime, Double quality, Double overall) {
+        this.vendor = v;
         this.onTimePercentage = onTime;
         this.qualityCompliancePercentage = quality;
         this.overallScore = overall;
     }
 
-    // ✅ REQUIRED by test constructors
-    public VendorPerformanceScore(Long id,
-                                  Vendor vendor,
-                                  Double onTime,
-                                  Double quality,
-                                  Double overall) {
-        this.id = id;
-        this.vendor = vendor;
-        this.onTimePercentage = onTime;
-        this.qualityCompliancePercentage = quality;
-        this.overallScore = overall;
-    }
-
-    public Double getOnTimePercentage() { return onTimePercentage; }
-    public Double getQualityCompliancePercentage() { return qualityCompliancePercentage; }
+    // getters
+    public Vendor getVendor() { return vendor; }
     public Double getOverallScore() { return overallScore; }
 }

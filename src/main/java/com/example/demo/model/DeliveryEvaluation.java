@@ -91,22 +91,13 @@
 // }
 package com.example.demo.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDate;
 
-@Entity
 public class DeliveryEvaluation {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
     private Vendor vendor;
-
-    @ManyToOne
     private SLARequirement slaRequirement;
-
     private Integer actualDeliveryDays;
     private Double qualityScore;
     private Boolean meetsDeliveryTarget;
@@ -123,6 +114,7 @@ public class DeliveryEvaluation {
         this.evaluationDate = date;
     }
 
+    // getters & setters (ALL required)
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -144,11 +136,6 @@ public class DeliveryEvaluation {
     public Boolean getMeetsQualityTarget() { return meetsQualityTarget; }
     public void setMeetsQualityTarget(Boolean meetsQualityTarget) { this.meetsQualityTarget = meetsQualityTarget; }
 
-    public LocalDate getEvaluationDate() {   // ✅ REQUIRED
-        return evaluationDate;
-    }
-
-    public void setEvaluationDate(LocalDate evaluationDate) {
-        this.evaluationDate = evaluationDate;
-    }
+    public LocalDate getEvaluationDate() { return evaluationDate; }
+    public void setEvaluationDate(LocalDate evaluationDate) { this.evaluationDate = evaluationDate; }
 }
