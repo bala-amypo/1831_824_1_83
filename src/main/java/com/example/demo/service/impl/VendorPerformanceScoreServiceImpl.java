@@ -62,8 +62,13 @@
 // }
 package com.example.demo.service.impl;
 
-import com.example.demo.model.*;
-import com.example.demo.repository.*;
+import com.example.demo.model.DeliveryEvaluation;
+import com.example.demo.model.Vendor;
+import com.example.demo.model.VendorPerformanceScore;
+import com.example.demo.repository.DeliveryEvaluationRepository;
+import com.example.demo.repository.VendorPerformanceScoreRepository;
+import com.example.demo.repository.VendorRepository;
+import com.example.demo.repository.VendorTierRepository;
 import com.example.demo.service.VendorPerformanceScoreService;
 
 import java.util.List;
@@ -76,7 +81,6 @@ public class VendorPerformanceScoreServiceImpl
     private final DeliveryEvaluationRepository evaluationRepository;
     private final VendorTierRepository tierRepository;
 
-    // ✅ EXACT ORDER REQUIRED BY TESTS
     public VendorPerformanceScoreServiceImpl(
             VendorRepository vendorRepository,
             VendorPerformanceScoreRepository scoreRepository,
@@ -91,15 +95,21 @@ public class VendorPerformanceScoreServiceImpl
 
     @Override
     public VendorPerformanceScore calculateScore(Long vendorId) {
+
         Vendor vendor = vendorRepository.findById(vendorId)
                 .orElseThrow(() -> new IllegalArgumentException("not found"));
 
-        List<DeliveryEvaluation> evals =
+        List<DeliveryEvaluation> evaluations =
                 evaluationRepository.findByVendorId(vendorId);
 
-        long total = evals.size();
-        long onTime = evals.stream().filter(e -> Boolean.TRUE.equals(e.getMeetsDeliveryTarget())).count();
-        long quality = evals.stream().filter(e -> Boolean.TRUE.equals(e.getMeetsQualityTarget())).count();
+        long total = evaluations.size();
+        long onTime = evaluations.stream()
+                .filter(e -> Boolean.TRUE.equals(e.getMeetsDeliveryTarget()))
+                .count();
+
+        long quality = evaluations.stream()
+                .filter(e -> Boolean.TRUE.equals(e.getMeetsQualityTarget()))
+                .count();
 
         double onTimePct = total == 0 ? 0 : (onTime * 100.0 / total);
         double qualityPct = total == 0 ? 0 : (quality * 100.0 / total);

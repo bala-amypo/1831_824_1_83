@@ -44,12 +44,9 @@ package com.example.demo.service.impl;
 import com.example.demo.model.Vendor;
 import com.example.demo.repository.VendorRepository;
 import com.example.demo.service.VendorService;
-import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.List;
 
-@Service
 public class VendorServiceImpl implements VendorService {
 
     private final VendorRepository repository;
@@ -63,11 +60,6 @@ public class VendorServiceImpl implements VendorService {
         if (repository.existsByName(vendor.getName())) {
             throw new IllegalArgumentException("unique");
         }
-
-        vendor.setActive(true);
-        vendor.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-        vendor.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-
         return repository.save(vendor);
     }
 
@@ -75,10 +67,18 @@ public class VendorServiceImpl implements VendorService {
     public Vendor updateVendor(Long id, Vendor vendor) {
         Vendor existing = getVendorById(id);
 
-        existing.setName(vendor.getName());
-        existing.setContactEmail(vendor.getContactEmail());
-        existing.setContactPhone(vendor.getContactPhone());
-        existing.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        if (vendor.getContactEmail() != null) {
+            existing.setContactEmail(vendor.getContactEmail());
+        }
+        if (vendor.getContactPhone() != null) {
+            existing.setContactPhone(vendor.getContactPhone());
+        }
+        if (vendor.getName() != null && !vendor.getName().equals(existing.getName())) {
+            if (repository.existsByName(vendor.getName())) {
+                throw new IllegalArgumentException("unique");
+            }
+            existing.setName(vendor.getName());
+        }
 
         return repository.save(existing);
     }
@@ -96,15 +96,8 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public void deactivateVendor(Long id) {
-        updateVendorStatus(id, false);
-    }
-
-    // ✅ REQUIRED BY TESTS
-    @Override
-    public void updateVendorStatus(Long id, Boolean active) {
         Vendor vendor = getVendorById(id);
-        vendor.setActive(active);
-        vendor.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        vendor.setActive(false);
         repository.save(vendor);
     }
 }
