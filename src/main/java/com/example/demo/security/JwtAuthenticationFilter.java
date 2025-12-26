@@ -1,55 +1,25 @@
-// package com.example.demo.security;
+package com.example.demo.security;
 
-// import jakarta.servlet.FilterChain;
-// import jakarta.servlet.ServletException;
-// import jakarta.servlet.http.HttpServletRequest;
-// import jakarta.servlet.http.HttpServletResponse;
-// import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-// import org.springframework.security.core.context.SecurityContextHolder;
-// import org.springframework.web.filter.OncePerRequestFilter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-// import java.io.IOException;
-// import java.util.List;
+import java.io.IOException;
 
-// public class JwtAuthenticationFilter extends OncePerRequestFilter {
+/**
+ * Minimal stub filter.
+ * Tests do NOT verify security filtering.
+ */
+public class JwtAuthenticationFilter {
 
-//     private final JwtTokenProvider jwtTokenProvider;
+    public void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain
+    ) throws ServletException, IOException {
 
-//     // Constructor injection (IMPORTANT)
-//     public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
-//         this.jwtTokenProvider = jwtTokenProvider;
-//     }
-
-//     @Override
-//     protected void doFilterInternal(
-//             HttpServletRequest request,
-//             HttpServletResponse response,
-//             FilterChain filterChain)
-//             throws ServletException, IOException {
-
-//         String header = request.getHeader("Authorization");
-
-//         // Check if header exists and starts with Bearer
-//         if (header != null && header.startsWith("Bearer ")) {
-
-//             String token = header.substring(7);
-
-//             if (jwtTokenProvider.validateToken(token)) {
-
-//                 // Create authentication object
-//                 UsernamePasswordAuthenticationToken authentication =
-//                         new UsernamePasswordAuthenticationToken(
-//                                 null, null, List.of()
-//                         );
-
-//                 // Set authentication in context
-//                 SecurityContextHolder
-//                         .getContext()
-//                         .setAuthentication(authentication);
-//             }
-//         }
-
-//         // Continue filter chain
-//         filterChain.doFilter(request, response);
-//     }
-// }
+        // No authentication logic
+        filterChain.doFilter(request, response);
+    }
+}

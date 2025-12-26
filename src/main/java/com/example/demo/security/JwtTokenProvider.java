@@ -53,17 +53,22 @@
 // }
 package com.example.demo.security;
 
-import io.jsonwebtoken.*;
-import java.util.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JwtTokenProvider {
 
     private final String secretKey;
-    private final long validity;
+    private final long validityInMs;
 
-    public JwtTokenProvider(String secretKey, long validity) {
+    public JwtTokenProvider(String secretKey, long validityInMs) {
         this.secretKey = secretKey;
-        this.validity = validity;
+        this.validityInMs = validityInMs;
     }
 
     public String createToken(String email, String role, Long userId) {
@@ -72,20 +77,23 @@ public class JwtTokenProvider {
         claims.put("role", role);
         claims.put("userId", userId);
 
+        Date now = new Date();
+        Date expiry = new Date(now.getTime() + validityInMs);
+
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(email)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + validity))
+                .setIssuedAt(now)
+                .setExpiration(expiry)
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
     public boolean validateToken(String token) {
         try {
-            getClaims(token);
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return true;
-        } catch (Exception e) {
+        } catch (Exception ex) {
             return false;
         }
     }
