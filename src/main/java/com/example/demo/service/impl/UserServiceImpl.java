@@ -57,7 +57,7 @@ import com.example.demo.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Service   // ⭐ THIS IS MANDATORY
+@Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -83,12 +83,7 @@ public class UserServiceImpl implements UserService {
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
-        return user;
-    }
 
-    @Override
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        return user;
     }
 }
