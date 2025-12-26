@@ -1,47 +1,47 @@
-package com.example.demo.security;
+// package com.example.demo.security;
 
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
+// import io.jsonwebtoken.*;
+// import io.jsonwebtoken.security.Keys;
 
-import java.security.Key;
-import java.util.Date;
+// import java.security.Key;
+// import java.util.Date;
 
-public class JwtTokenProvider {
+// public class JwtTokenProvider {
 
-    private final Key key;
-    private final long validityInMs;
+//     private final Key key;
+//     private final long validityInMs;
 
-    // REQUIRED constructor (for test cases)
-    public JwtTokenProvider(String secret, long validityInMs) {
-        this.key = Keys.hmacShaKeyFor(secret.getBytes());
-        this.validityInMs = validityInMs;
-    }
+//     // REQUIRED constructor (for test cases)
+//     public JwtTokenProvider(String secret, long validityInMs) {
+//         this.key = Keys.hmacShaKeyFor(secret.getBytes());
+//         this.validityInMs = validityInMs;
+//     }
 
-    public String createToken(String email, String role) {
+//     public String createToken(String email, String role) {
 
-        Claims claims = Jwts.claims().setSubject(email);
-        claims.put("role", role);
+//         Claims claims = Jwts.claims().setSubject(email);
+//         claims.put("role", role);
 
-        Date now = new Date();
-        Date expiry = new Date(now.getTime() + validityInMs);
+//         Date now = new Date();
+//         Date expiry = new Date(now.getTime() + validityInMs);
 
-        return Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(now)
-                .setExpiration(expiry)
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
-    }
+//         return Jwts.builder()
+//                 .setClaims(claims)
+//                 .setIssuedAt(now)
+//                 .setExpiration(expiry)
+//                 .signWith(key, SignatureAlgorithm.HS256)
+//                 .compact();
+//     }
 
-    public boolean validateToken(String token) {
-        try {
-            Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token);
-            return true;
-        } catch (JwtException | IllegalArgumentException e) {
-            return false;
-        }
-    }
-}
+//     public boolean validateToken(String token) {
+//         try {
+//             Jwts.parserBuilder()
+//                 .setSigningKey(key)
+//                 .build()
+//                 .parseClaimsJws(token);
+//             return true;
+//         } catch (JwtException | IllegalArgumentException e) {
+//             return false;
+//         }
+//     }
+// }
