@@ -1,4 +1,5 @@
 package com.example.demo;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,7 +9,7 @@ public class DemoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
-		system.out.println(new BCryptPasswordEncoder().encode("123456"));
+		System.out.println(new BCryptPasswordEncoder().encode("123456"));
 	}
 
 }
