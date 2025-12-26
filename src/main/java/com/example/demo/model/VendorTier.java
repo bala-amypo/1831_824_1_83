@@ -86,13 +86,24 @@ public class VendorTier {
 
     public VendorTier() {}
 
-    public VendorTier(String name, Double min, String desc) {
-        this.tierName = name;
-        this.minScoreThreshold = min;
-        this.description = desc;
+    public VendorTier(String tierName, Double minScoreThreshold, String description) {
+        this.tierName = tierName;
+        this.minScoreThreshold = minScoreThreshold;
+        this.description = description;
+        this.active = true;
     }
 
-    // getters & setters
+    public VendorTier(Long id, String tierName,
+                      Double minScoreThreshold,
+                      String description,
+                      Boolean active) {
+        this.id = id;
+        this.tierName = tierName;
+        this.minScoreThreshold = minScoreThreshold;
+        this.description = description;
+        this.active = active;
+    }
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -100,7 +111,9 @@ public class VendorTier {
     public void setTierName(String tierName) { this.tierName = tierName; }
 
     public Double getMinScoreThreshold() { return minScoreThreshold; }
-    public void setMinScoreThreshold(Double minScoreThreshold) { this.minScoreThreshold = minScoreThreshold; }
+    public void setMinScoreThreshold(Double minScoreThreshold) {
+        this.minScoreThreshold = minScoreThreshold;
+    }
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }

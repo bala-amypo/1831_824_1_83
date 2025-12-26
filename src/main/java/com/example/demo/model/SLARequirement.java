@@ -100,15 +100,15 @@ public class SLARequirement {
 
     public SLARequirement() {}
 
-    public SLARequirement(String name, String desc, Integer days, Double score) {
-        this.requirementName = name;
-        this.description = desc;
-        this.maxDeliveryDays = days;
-        this.minQualityScore = score;
+    public SLARequirement(String requirementName, String description,
+                          Integer maxDeliveryDays, Double minQualityScore) {
+        this.requirementName = requirementName;
+        this.description = description;
+        this.maxDeliveryDays = maxDeliveryDays;
+        this.minQualityScore = minQualityScore;
         this.active = true;
     }
 
-    // getters & setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

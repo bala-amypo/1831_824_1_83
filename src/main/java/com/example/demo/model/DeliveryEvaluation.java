@@ -106,15 +106,16 @@ public class DeliveryEvaluation {
 
     public DeliveryEvaluation() {}
 
-    public DeliveryEvaluation(Vendor v, SLARequirement s, Integer days, Double score, LocalDate date) {
-        this.vendor = v;
-        this.slaRequirement = s;
-        this.actualDeliveryDays = days;
-        this.qualityScore = score;
-        this.evaluationDate = date;
+    public DeliveryEvaluation(Vendor vendor, SLARequirement slaRequirement,
+                              Integer actualDeliveryDays, Double qualityScore,
+                              LocalDate evaluationDate) {
+        this.vendor = vendor;
+        this.slaRequirement = slaRequirement;
+        this.actualDeliveryDays = actualDeliveryDays;
+        this.qualityScore = qualityScore;
+        this.evaluationDate = evaluationDate;
     }
 
-    // getters & setters (ALL required)
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -122,20 +123,30 @@ public class DeliveryEvaluation {
     public void setVendor(Vendor vendor) { this.vendor = vendor; }
 
     public SLARequirement getSlaRequirement() { return slaRequirement; }
-    public void setSlaRequirement(SLARequirement slaRequirement) { this.slaRequirement = slaRequirement; }
+    public void setSlaRequirement(SLARequirement slaRequirement) {
+        this.slaRequirement = slaRequirement;
+    }
 
     public Integer getActualDeliveryDays() { return actualDeliveryDays; }
-    public void setActualDeliveryDays(Integer actualDeliveryDays) { this.actualDeliveryDays = actualDeliveryDays; }
+    public void setActualDeliveryDays(Integer actualDeliveryDays) {
+        this.actualDeliveryDays = actualDeliveryDays;
+    }
 
     public Double getQualityScore() { return qualityScore; }
     public void setQualityScore(Double qualityScore) { this.qualityScore = qualityScore; }
 
     public Boolean getMeetsDeliveryTarget() { return meetsDeliveryTarget; }
-    public void setMeetsDeliveryTarget(Boolean meetsDeliveryTarget) { this.meetsDeliveryTarget = meetsDeliveryTarget; }
+    public void setMeetsDeliveryTarget(Boolean meetsDeliveryTarget) {
+        this.meetsDeliveryTarget = meetsDeliveryTarget;
+    }
 
     public Boolean getMeetsQualityTarget() { return meetsQualityTarget; }
-    public void setMeetsQualityTarget(Boolean meetsQualityTarget) { this.meetsQualityTarget = meetsQualityTarget; }
+    public void setMeetsQualityTarget(Boolean meetsQualityTarget) {
+        this.meetsQualityTarget = meetsQualityTarget;
+    }
 
     public LocalDate getEvaluationDate() { return evaluationDate; }
-    public void setEvaluationDate(LocalDate evaluationDate) { this.evaluationDate = evaluationDate; }
+    public void setEvaluationDate(LocalDate evaluationDate) {
+        this.evaluationDate = evaluationDate;
+    }
 }

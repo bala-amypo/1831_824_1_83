@@ -102,18 +102,43 @@ public class VendorPerformanceScore {
     private Double onTimePercentage;
     private Double qualityCompliancePercentage;
     private Double overallScore;
-    private LocalDateTime calculatedAt = LocalDateTime.now();
+    private LocalDateTime calculatedAt;
 
     public VendorPerformanceScore() {}
 
-    public VendorPerformanceScore(Vendor v, Double onTime, Double quality, Double overall) {
-        this.vendor = v;
-        this.onTimePercentage = onTime;
-        this.qualityCompliancePercentage = quality;
-        this.overallScore = overall;
+    public VendorPerformanceScore(Vendor vendor,
+                                  Double onTimePercentage,
+                                  Double qualityCompliancePercentage,
+                                  Double overallScore) {
+        this.vendor = vendor;
+        this.onTimePercentage = onTimePercentage;
+        this.qualityCompliancePercentage = qualityCompliancePercentage;
+        this.overallScore = overallScore;
+        this.calculatedAt = LocalDateTime.now();
     }
 
-    // getters
+    public VendorPerformanceScore(Long id, Vendor vendor,
+                                  Double onTimePercentage,
+                                  Double qualityCompliancePercentage,
+                                  Double overallScore,
+                                  LocalDateTime calculatedAt) {
+        this.id = id;
+        this.vendor = vendor;
+        this.onTimePercentage = onTimePercentage;
+        this.qualityCompliancePercentage = qualityCompliancePercentage;
+        this.overallScore = overallScore;
+        this.calculatedAt = calculatedAt;
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
     public Vendor getVendor() { return vendor; }
+    public void setVendor(Vendor vendor) { this.vendor = vendor; }
+
+    public Double getOnTimePercentage() { return onTimePercentage; }
+    public Double getQualityCompliancePercentage() { return qualityCompliancePercentage; }
     public Double getOverallScore() { return overallScore; }
+
+    public LocalDateTime getCalculatedAt() { return calculatedAt; }
 }

@@ -78,6 +78,8 @@
 // }
 package com.example.demo.model;
 
+import java.sql.Timestamp;
+
 public class Vendor {
 
     private Long id;
@@ -85,17 +87,18 @@ public class Vendor {
     private String contactEmail;
     private String contactPhone;
     private Boolean active = true;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
 
     public Vendor() {}
 
-    public Vendor(String name, String email, String phone) {
+    public Vendor(String name, String contactEmail, String contactPhone) {
         this.name = name;
-        this.contactEmail = email;
-        this.contactPhone = phone;
+        this.contactEmail = contactEmail;
+        this.contactPhone = contactPhone;
         this.active = true;
     }
 
-    // getters & setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -110,4 +113,10 @@ public class Vendor {
 
     public Boolean getActive() { return active; }
     public void setActive(Boolean active) { this.active = active; }
+
+    public Timestamp getCreatedAt() { return createdAt; }
+    public void setCreatedAt(Timestamp createdAt) { this.createdAt = createdAt; }
+
+    public Timestamp getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(Timestamp updatedAt) { this.updatedAt = updatedAt; }
 }
