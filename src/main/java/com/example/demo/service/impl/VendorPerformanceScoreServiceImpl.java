@@ -62,74 +62,81 @@
 // }
 package com.example.demo.service.impl;
 
-import com.example.demo.model.DeliveryEvaluation;
 import com.example.demo.model.Vendor;
 import com.example.demo.model.VendorPerformanceScore;
-import com.example.demo.repository.DeliveryEvaluationRepository;
-import com.example.demo.repository.VendorPerformanceScoreRepository;
-import com.example.demo.repository.VendorRepository;
-import com.example.demo.repository.VendorTierRepository;
+import com.example.demo.model.VendorTier;
+import com.example.demo.repository.*;
 import com.example.demo.service.VendorPerformanceScoreService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-public class VendorPerformanceScoreServiceImpl
-        implements VendorPerformanceScoreService {
+public class VendorPerformanceScoreServiceImpl implements VendorPerformanceScoreService {
 
+    private final VendorPerformanceScoreRepository vendorPerformanceScoreRepository;
+    private final DeliveryEvaluationRepository deliveryEvaluationRepository;
     private final VendorRepository vendorRepository;
-    private final VendorPerformanceScoreRepository scoreRepository;
-    private final DeliveryEvaluationRepository evaluationRepository;
-    private final VendorTierRepository tierRepository;
+    private final VendorTierRepository vendorTierRepository;
 
+    // 🔴 THIS CONSTRUCTOR MUST MATCH THE TEST EXACTLY
     public VendorPerformanceScoreServiceImpl(
+            VendorPerformanceScoreRepository vendorPerformanceScoreRepository,
+            DeliveryEvaluationRepository deliveryEvaluationRepository,
             VendorRepository vendorRepository,
-            VendorPerformanceScoreRepository scoreRepository,
-            DeliveryEvaluationRepository evaluationRepository,
-            VendorTierRepository tierRepository) {
-
+            VendorTierRepository vendorTierRepository
+    ) {
+        this.vendorPerformanceScoreRepository = vendorPerformanceScoreRepository;
+        this.deliveryEvaluationRepository = deliveryEvaluationRepository;
         this.vendorRepository = vendorRepository;
-        this.scoreRepository = scoreRepository;
-        this.evaluationRepository = evaluationRepository;
-        this.tierRepository = tierRepository;
+        this.vendorTierRepository = vendorTierRepository;
     }
 
     @Override
     public VendorPerformanceScore calculateScore(Long vendorId) {
-
         Vendor vendor = vendorRepository.findById(vendorId)
-                .orElseThrow(() -> new IllegalArgumentException("not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Vendor not found"));
 
-        List<DeliveryEvaluation> evaluations =
-                evaluationRepository.findByVendorId(vendorId);
+        var evaluations = deliveryEvaluationRepository.findByVendorId(vendorId);
 
-        long total = evaluations.size();
-        long onTime = evaluations.stream()
-                .filter(e -> Boolean.TRUE.equals(e.getMeetsDeliveryTarget()))
-                .count();
+        double total = evaluations.size();
+        double onTime = evaluations.stream().filter(e -> Boolean.TRUE.equals(e.getMeetsDeliveryTarget())).count();
+        double quality = evaluations.stream().filter(e -> Boolean.TRUE.equals(e.getMeetsQualityTarget())).count();
 
-        long quality = evaluations.stream()
-                .filter(e -> Boolean.TRUE.equals(e.getMeetsQualityTarget()))
-                .count();
-
-        double onTimePct = total == 0 ? 0 : (onTime * 100.0 / total);
-        double qualityPct = total == 0 ? 0 : (quality * 100.0 / total);
-        double overall = (onTimePct + qualityPct) / 2;
+        double onTimePercent = total == 0 ? 0 : (onTime / total) * 100;
+        double qualityPercent = total == 0 ? 0 : (quality / total) * 100;
+        double overall = (onTimePercent + qualityPercent) / 2;
 
         VendorPerformanceScore score =
-                new VendorPerformanceScore(vendor, onTimePct, qualityPct, overall);
+                new VendorPerformanceScore(vendor, onTimePercent, qualityPercent, overall);
 
-        return scoreRepository.save(score);
+        score.setCalculatedAt(LocalDateTime.now());
+
+        // assign tier if exists
+        List<VendorTier> tiers =
+                vendorTierRepository.findByActiveTrueOrderByMinScoreThresholdDesc();
+
+        for (VendorTier tier : tiers) {
+            if (overall >= tier.getMinScoreThreshold()) {
+                score.setVendorTier(tier);
+                break;
+            }
+        }
+
+        return vendorPerformanceScoreRepository.save(score);
     }
 
     @Override
     public VendorPerformanceScore getLatestScore(Long vendorId) {
-        return scoreRepository
+        return vendorPerformanceScoreRepository
                 .findByVendorOrderByCalculatedAtDesc(vendorId)
-                .get(0);
+                .stream()
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
     public List<VendorPerformanceScore> getScoresForVendor(Long vendorId) {
-        return scoreRepository.findByVendorOrderByCalculatedAtDesc(vendorId);
+        return vendorPerformanceScoreRepository
+                .findByVendorOrderByCalculatedAtDesc(vendorId);
     }
 }
