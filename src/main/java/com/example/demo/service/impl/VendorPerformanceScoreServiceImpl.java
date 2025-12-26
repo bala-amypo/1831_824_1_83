@@ -1,62 +1,125 @@
+// package com.example.demo.service.impl;
+// import com.example.demo.model.Vendor;
+// import com.example.demo.model.VendorPerformanceScore;
+// import com.example.demo.repository.VendorPerformanceScoreRepository;
+// import com.example.demo.repository.VendorRepository;
+// import com.example.demo.service.VendorPerformanceScoreService;
+// import org.springframework.stereotype.Service;
+// import java.time.LocalDateTime;
+// import java.util.List;
+
+// @Service
+// public class VendorPerformanceScoreServiceImpl
+//         implements VendorPerformanceScoreService {
+
+//     private final VendorRepository vendorRepository;
+//     private final VendorPerformanceScoreRepository scoreRepository;
+
+//     public VendorPerformanceScoreServiceImpl(
+//             VendorRepository vendorRepository,
+//             VendorPerformanceScoreRepository scoreRepository) {
+//         this.vendorRepository = vendorRepository;
+//         this.scoreRepository = scoreRepository;
+//     }
+
+//     @Override
+//     public VendorPerformanceScore calculateScore(Long vendorId) {
+
+//         Vendor vendor = vendorRepository.findById(vendorId)
+//                 .orElseThrow(() -> new RuntimeException("Vendor not found"));
+
+//         double onTime = 80.0;
+//         double quality = 90.0;
+
+//         double overall = (onTime * 0.5) + (quality * 0.5);
+
+//         VendorPerformanceScore score = new VendorPerformanceScore();
+//         score.setVendor(vendor);
+//         score.setOnTimePercentage(onTime);
+//         score.setQualityCompliancePercentage(quality);
+//         score.setOverallScore(overall);
+//         score.setCalculatedAt(LocalDateTime.now());
+
+//         return scoreRepository.save(score);
+//     }
+
+//     @Override
+//     public VendorPerformanceScore getLatestScore(Long vendorId) {
+//         Vendor vendor = vendorRepository.findById(vendorId)
+//                 .orElseThrow(() -> new RuntimeException("Vendor not found"));
+
+//         return scoreRepository.findTopByVendorOrderByCalculatedAtDesc(vendor)
+//                 .orElseThrow(() -> new RuntimeException("No score found"));
+//     }
+
+//     @Override
+//     public List<VendorPerformanceScore> getScoresForVendor(Long vendorId) {
+//         Vendor vendor = vendorRepository.findById(vendorId)
+//                 .orElseThrow(() -> new RuntimeException("Vendor not found"));
+
+//         return scoreRepository.findByVendorOrderByCalculatedAtDesc(vendor);
+//     }
+// }
 package com.example.demo.service.impl;
-import com.example.demo.model.Vendor;
-import com.example.demo.model.VendorPerformanceScore;
-import com.example.demo.repository.VendorPerformanceScoreRepository;
-import com.example.demo.repository.VendorRepository;
+
+import com.example.demo.model.*;
+import com.example.demo.repository.*;
 import com.example.demo.service.VendorPerformanceScoreService;
-import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
+
 import java.util.List;
 
-@Service
 public class VendorPerformanceScoreServiceImpl
         implements VendorPerformanceScoreService {
 
     private final VendorRepository vendorRepository;
     private final VendorPerformanceScoreRepository scoreRepository;
+    private final DeliveryEvaluationRepository evaluationRepository;
+    private final VendorTierRepository tierRepository;
 
+    // ✅ EXACT ORDER REQUIRED BY TESTS
     public VendorPerformanceScoreServiceImpl(
             VendorRepository vendorRepository,
-            VendorPerformanceScoreRepository scoreRepository) {
+            VendorPerformanceScoreRepository scoreRepository,
+            DeliveryEvaluationRepository evaluationRepository,
+            VendorTierRepository tierRepository) {
+
         this.vendorRepository = vendorRepository;
         this.scoreRepository = scoreRepository;
+        this.evaluationRepository = evaluationRepository;
+        this.tierRepository = tierRepository;
     }
 
     @Override
     public VendorPerformanceScore calculateScore(Long vendorId) {
-
         Vendor vendor = vendorRepository.findById(vendorId)
-                .orElseThrow(() -> new RuntimeException("Vendor not found"));
+                .orElseThrow(() -> new IllegalArgumentException("not found"));
 
-        double onTime = 80.0;
-        double quality = 90.0;
+        List<DeliveryEvaluation> evals =
+                evaluationRepository.findByVendorId(vendorId);
 
-        double overall = (onTime * 0.5) + (quality * 0.5);
+        long total = evals.size();
+        long onTime = evals.stream().filter(e -> Boolean.TRUE.equals(e.getMeetsDeliveryTarget())).count();
+        long quality = evals.stream().filter(e -> Boolean.TRUE.equals(e.getMeetsQualityTarget())).count();
 
-        VendorPerformanceScore score = new VendorPerformanceScore();
-        score.setVendor(vendor);
-        score.setOnTimePercentage(onTime);
-        score.setQualityCompliancePercentage(quality);
-        score.setOverallScore(overall);
-        score.setCalculatedAt(LocalDateTime.now());
+        double onTimePct = total == 0 ? 0 : (onTime * 100.0 / total);
+        double qualityPct = total == 0 ? 0 : (quality * 100.0 / total);
+        double overall = (onTimePct + qualityPct) / 2;
+
+        VendorPerformanceScore score =
+                new VendorPerformanceScore(vendor, onTimePct, qualityPct, overall);
 
         return scoreRepository.save(score);
     }
 
     @Override
     public VendorPerformanceScore getLatestScore(Long vendorId) {
-        Vendor vendor = vendorRepository.findById(vendorId)
-                .orElseThrow(() -> new RuntimeException("Vendor not found"));
-
-        return scoreRepository.findTopByVendorOrderByCalculatedAtDesc(vendor)
-                .orElseThrow(() -> new RuntimeException("No score found"));
+        return scoreRepository
+                .findByVendorOrderByCalculatedAtDesc(vendorId)
+                .get(0);
     }
 
     @Override
     public List<VendorPerformanceScore> getScoresForVendor(Long vendorId) {
-        Vendor vendor = vendorRepository.findById(vendorId)
-                .orElseThrow(() -> new RuntimeException("Vendor not found"));
-
-        return scoreRepository.findByVendorOrderByCalculatedAtDesc(vendor);
+        return scoreRepository.findByVendorOrderByCalculatedAtDesc(vendorId);
     }
 }
