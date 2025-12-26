@@ -14,9 +14,9 @@ import com.example.demo.model.User;
 
 public interface UserService {
 
-    User register(String email, String password, String role);
+    User register(User user);
 
-    User login(String email, String password);
+    User login(String username, String password);
 
-    User getByEmail(String email);
+    User findByUsername(String username);
 }
