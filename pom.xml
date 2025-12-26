@@ -80,12 +80,7 @@
     <groupId>org.springframework.security</groupId>
     <artifactId>spring-security-crypto</artifactId>
 </dependency>
-<dependency>
-    <groupId>org.testng</groupId>
-    <artifactId>testng</artifactId>
-    <version>7.9.0</version>
-    <scope>test</scope>
-</dependency>
+
 
     </dependencies>
 
@@ -95,6 +90,20 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+             <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.2.5</version>
+            <configuration>
+                <useModulePath>false</useModulePath>
+                <properties>
+                    <property>
+                        <name>listener</name>
+                        <value>com.example.demo.TestResultListener</value>
+                    </property>
+                </properties>
+            </configuration>
+        </plugin>
         </plugins>
     </build>
 
