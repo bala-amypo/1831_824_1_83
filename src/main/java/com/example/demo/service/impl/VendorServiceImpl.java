@@ -54,14 +54,12 @@ public class VendorServiceImpl implements VendorService {
 
     private final VendorRepository repository;
 
-    // ✅ EXACT constructor
     public VendorServiceImpl(VendorRepository repository) {
         this.repository = repository;
     }
 
     @Override
     public Vendor createVendor(Vendor vendor) {
-
         if (repository.existsByName(vendor.getName())) {
             throw new IllegalArgumentException("unique");
         }
@@ -98,8 +96,15 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public void deactivateVendor(Long id) {
+        updateVendorStatus(id, false);
+    }
+
+    // ✅ REQUIRED BY TESTS
+    @Override
+    public void updateVendorStatus(Long id, Boolean active) {
         Vendor vendor = getVendorById(id);
-        vendor.setActive(false);
+        vendor.setActive(active);
+        vendor.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         repository.save(vendor);
     }
 }

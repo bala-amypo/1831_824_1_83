@@ -1,4 +1,19 @@
+// package com.example.demo.service;
+// import com.example.demo.model.Vendor;
+// import java.util.List;
+
+// public interface VendorService {
+
+//     Vendor createVendor(Vendor vendor);
+
+//     Vendor getVendorById(Long id);
+
+//     List<Vendor> getAllVendors();
+
+//     Vendor updateVendorStatus(Long id, Boolean active);
+// }
 package com.example.demo.service;
+
 import com.example.demo.model.Vendor;
 import java.util.List;
 
@@ -6,9 +21,14 @@ public interface VendorService {
 
     Vendor createVendor(Vendor vendor);
 
+    Vendor updateVendor(Long id, Vendor vendor);
+
     Vendor getVendorById(Long id);
 
     List<Vendor> getAllVendors();
 
-    Vendor updateVendorStatus(Long id, Boolean active);
+    void deactivateVendor(Long id);
+
+    // ✅ REQUIRED BY TESTS
+    void updateVendorStatus(Long id, Boolean active);
 }
