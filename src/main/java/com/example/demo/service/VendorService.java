@@ -28,7 +28,4 @@ public interface VendorService {
     List<Vendor> getAllVendors();
 
     void deactivateVendor(Long id);
-
-    // ✅ REQUIRED BY TESTS
-    void updateVendorStatus(Long id, Boolean active);
 }
