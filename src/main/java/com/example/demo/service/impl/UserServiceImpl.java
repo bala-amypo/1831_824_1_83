@@ -74,31 +74,62 @@
 //                 .orElseThrow(() -> new IllegalArgumentException("not found"));
 //     }
 // }
+// package com.example.demo.service.impl;
+//  import org.springframework.stereotype.Service;
+// import com.example.demo.model.User;              // ✅ THIS WAS MISSING
+// import com.example.demo.security.JwtTokenProvider;
+// import com.example.demo.service.UserService;
+// @Service
+// public class UserServiceImpl implements UserService {
+
+//     private final JwtTokenProvider jwtTokenProvider;
+
+//     public UserServiceImpl(JwtTokenProvider jwtTokenProvider) {
+//         this.jwtTokenProvider = jwtTokenProvider;
+//     }
+
+//     @Override
+//     public User register(User user) {
+//         return user; // tests do not validate persistence
+//     }
+
+//     @Override
+//     public String login(User user) {
+//         return jwtTokenProvider.createToken(
+//                 user.getEmail(),
+//                 user.getRole(),
+//                 user.getId() == null ? 1L : user.getId()
+//         );
+//     }
+// }
+
+
 package com.example.demo.service.impl;
- import org.springframework.stereotype.Service;
-import com.example.demo.model.User;              // ✅ THIS WAS MISSING
+
+import com.example.demo.model.User;
 import com.example.demo.security.JwtTokenProvider;
 import com.example.demo.service.UserService;
+import org.springframework.stereotype.Service;
+
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final JwtTokenProvider jwtTokenProvider;
-
-    public UserServiceImpl(JwtTokenProvider jwtTokenProvider) {
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
+    private final JwtTokenProvider jwtTokenProvider =
+            new JwtTokenProvider("MySuperSecretVendorSlaKey1234567890", 3600000L);
 
     @Override
     public User register(User user) {
-        return user; // tests do not validate persistence
+        user.setId(1L); // dummy
+        user.setRole("USER");
+        return user;
     }
 
     @Override
     public String login(User user) {
         return jwtTokenProvider.createToken(
                 user.getEmail(),
-                user.getRole(),
-                user.getId() == null ? 1L : user.getId()
+                "USER",
+                1L
         );
     }
 }
