@@ -1,21 +1,24 @@
-// package com.example.demo.repository;
-// import com.example.demo.model.VendorPerformanceScore;
-// import com.example.demo.model.Vendor;
-// import org.springframework.data.jpa.repository.JpaRepository;
-// import java.util.List;
-// import java.util.Optional;
-// public interface VendorPerformanceScoreRepository extends JpaRepository<VendorPerformanceScore, Long> {
-//     Optional<VendorPerformanceScore> findTopByVendorOrderByCalculatedAtDesc(Vendor vendor);
-//     List<VendorPerformanceScore> findByVendorOrderByCalculatedAtDesc(Vendor vendor);
-// }
 package com.example.demo.repository;
 
+import com.example.demo.model.Vendor;
 import com.example.demo.model.VendorPerformanceScore;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
 import java.util.List;
 
-public interface VendorPerformanceScoreRepository {
+public interface VendorPerformanceScoreRepository
+        extends JpaRepository<VendorPerformanceScore, Long> {
 
-    VendorPerformanceScore save(VendorPerformanceScore score);
-
-    List<VendorPerformanceScore> findByVendorOrderByCalculatedAtDesc(Long vendorId);
+    // ✅ REQUIRED BY TEST CASES (DO NOT RENAME)
+    @Query("""
+        SELECT vps
+        FROM VendorPerformanceScore vps
+        WHERE vps.vendor.id = :vendorId
+        ORDER BY vps.calculatedAt DESC
+    """)
+    List<VendorPerformanceScore> findByVendorOrderByCalculatedAtDesc(
+            @Param("vendorId") Long vendorId
+    );
 }
