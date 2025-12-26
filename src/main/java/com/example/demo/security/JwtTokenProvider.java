@@ -11,13 +11,14 @@ public class JwtTokenProvider {
     private final Key key;
     private final long validityInMs;
 
-    // REQUIRED by test case
+    // REQUIRED constructor (for test cases)
     public JwtTokenProvider(String secret, long validityInMs) {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
         this.validityInMs = validityInMs;
     }
 
     public String createToken(String email, String role) {
+
         Claims claims = Jwts.claims().setSubject(email);
         claims.put("role", role);
 
@@ -32,21 +33,12 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public String getEmail(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
-    }
-
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
-                    .setSigningKey(key)
-                    .build()
-                    .parseClaimsJws(token);
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             return false;
