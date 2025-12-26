@@ -75,11 +75,11 @@
 //     }
 // }
 package com.example.demo.service.impl;
-
+ import org.springframework.stereotype.Service;
 import com.example.demo.model.User;              // ✅ THIS WAS MISSING
 import com.example.demo.security.JwtTokenProvider;
 import com.example.demo.service.UserService;
-
+@Service
 public class UserServiceImpl implements UserService {
 
     private final JwtTokenProvider jwtTokenProvider;
