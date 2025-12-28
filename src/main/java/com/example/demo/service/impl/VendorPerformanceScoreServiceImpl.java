@@ -1,85 +1,72 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.DeliveryEvaluation;
-import com.example.demo.model.Vendor;
-import com.example.demo.model.VendorPerformanceScore;
-import com.example.demo.model.VendorTier;
-import com.example.demo.repository.DeliveryEvaluationRepository;
-import com.example.demo.repository.VendorPerformanceScoreRepository;
-import com.example.demo.repository.VendorRepository;
-import com.example.demo.repository.VendorTierRepository;
-import com.example.demo.service.VendorPerformanceScoreService;
+import com.example.demo.model.SLARequirement;
+import com.example.demo.repository.SLARequirementRepository;
+import com.example.demo.service.SLARequirementService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class VendorPerformanceScoreServiceImpl implements VendorPerformanceScoreService {
+public class SLARequirementServiceImpl implements SLARequirementService {
 
-    private final VendorPerformanceScoreRepository scoreRepository;
-    private final DeliveryEvaluationRepository evaluationRepository;
-    private final VendorRepository vendorRepository;
-    private final VendorTierRepository tierRepository;
+    private final SLARequirementRepository repository;
 
-    public VendorPerformanceScoreServiceImpl(VendorPerformanceScoreRepository scoreRepository,
-                                             DeliveryEvaluationRepository evaluationRepository,
-                                             VendorRepository vendorRepository,
-                                             VendorTierRepository tierRepository) {
-        this.scoreRepository = scoreRepository;
-        this.evaluationRepository = evaluationRepository;
-        this.vendorRepository = vendorRepository;
-        this.tierRepository = tierRepository;
+    public SLARequirementServiceImpl(SLARequirementRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public VendorPerformanceScore calculateScore(Long vendorId) {
+    public SLARequirement createRequirement(SLARequirement req) {
+        if (req.getMaxDeliveryDays() <= 0) {
+            throw new IllegalArgumentException("Max delivery days must be > 0");
+        }
+        if (req.getQualityThreshold() < 0 || req.getQualityThreshold() > 100) {
+            throw new IllegalArgumentException("Quality score must be between 0 and 100");
+        }
+        if (repository.existsByRequirementName(req.getRequirementName())) {
+            throw new IllegalArgumentException("Requirement name must be unique");
+        }
+        req.setActive(true);
+        return repository.save(req);
+    }
 
-        Vendor vendor = vendorRepository.findById(vendorId)
-                .orElseThrow(() -> new IllegalArgumentException("Vendor not found"));
+    @Override
+    public SLARequirement updateRequirement(Long id, SLARequirement update) {
+        SLARequirement existing = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Requirement not found"));
 
-        List<DeliveryEvaluation> evaluations =
-                evaluationRepository.findByVendorId(vendorId);
-
-        long total = evaluations.size();
-        long onTime = evaluations.stream()
-                .filter(DeliveryEvaluation::getMeetsDeliveryTarget)
-                .count();
-
-        long quality = evaluations.stream()
-                .filter(DeliveryEvaluation::getMeetsQualityTarget)
-                .count();
-
-        double onTimePct = total == 0 ? 0 : (onTime * 100.0 / total);
-        double qualityPct = total == 0 ? 0 : (quality * 100.0 / total);
-        double overall = (onTimePct + qualityPct) / 2;
-
-        VendorPerformanceScore score =
-                new VendorPerformanceScore(vendor, onTimePct, qualityPct, overall);
-
-        List<VendorTier> tiers =
-                tierRepository.findByActiveTrueOrderByMinScoreThresholdDesc();
-
-        for (VendorTier tier : tiers) {
-            if (overall >= tier.getMinScoreThreshold()) {
-                score.setVendorTier(tier);
-                break;
-            }
+        if (update.getRequirementName() != null &&
+                repository.existsByRequirementName(update.getRequirementName())) {
+            throw new IllegalArgumentException("Requirement name must be unique");
         }
 
-        return scoreRepository.save(score);
+        if (update.getRequirementName() != null) {
+            existing.setRequirementName(update.getRequirementName());
+        }
+        if (update.getDescription() != null) {
+            existing.setDescription(update.getDescription());
+        }
+
+        return repository.save(existing);
     }
-@Override
-public VendorPerformanceScore getLatestScore(Long vendorId) {
-    return scoreRepository.findByVendorOrderByCalculatedAtDesc(vendorId)
-            .stream()
-            .findFirst()
-            .orElse(null);
-}
 
-@Override
-public List<VendorPerformanceScore> getScoresForVendor(Long vendorId) {
-    return scoreRepository.findByVendorOrderByCalculatedAtDesc(vendorId);
-}
+    @Override
+    public SLARequirement getRequirementById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Requirement not found"));
+    }
 
+    @Override
+    public List<SLARequirement> getAllRequirements() {
+        return repository.findAll();
+    }
 
+    @Override
+    public void deactivateRequirement(Long id) {
+        SLARequirement req = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Requirement not found"));
+        req.setActive(false);
+        repository.save(req);
+    }
 }
