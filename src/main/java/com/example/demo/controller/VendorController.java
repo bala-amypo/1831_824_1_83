@@ -1,91 +1,44 @@
-// package com.example.demo.controller;
-
-// import com.example.demo.model.Vendor;
-// import com.example.demo.service.VendorService;
-// import org.springframework.web.bind.annotation.*;
-
-// import java.util.List;
-
-// @RestController
-// @RequestMapping("/api/vendors")
-// public class VendorController {
-
-//     private final VendorService vendorService;
-
-//     public VendorController(VendorService vendorService) {
-//         this.vendorService = vendorService;
-//     }
-
-//     @PostMapping
-//     public Vendor createVendor(@RequestBody Vendor vendor) {
-//         return vendorService.createVendor(vendor);
-//     }
-
-//     @GetMapping("/{id}")
-//     public Vendor getVendorById(@PathVariable Long id) {
-//         return vendorService.getVendorById(id);
-//     }
-
-//     @GetMapping
-//     public List<Vendor> getAllVendors() {
-//         return vendorService.getAllVendors();
-//     }
-
-//     @PutMapping("/{id}")
-//     public Vendor updateVendor(@PathVariable Long id,
-//                                @RequestBody Vendor vendor) {
-//         return vendorService.updateVendor(id, vendor);
-//     }
-
-//     @PutMapping("/{id}/deactivate")
-//     public void deactivateVendor(@PathVariable Long id) {
-//         vendorService.deactivateVendor(id);
-//     }
-// }
-
 package com.example.demo.controller;
 
-import com.example.demo.model.VendorPerformanceScore;
-import com.example.demo.service.VendorPerformanceScoreService;
-import org.springframework.http.ResponseEntity;
+import com.example.demo.model.Vendor;
+import com.example.demo.service.VendorService;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/scores")
-@SecurityRequirement(name="bearerAuth")
-public class VendorPerformanceScoreController {
+@RequestMapping("/api/vendors")
+public class VendorController {
 
-    private final VendorPerformanceScoreService scoreService;
+    private final VendorService vendorService;
 
-    public VendorPerformanceScoreController(
-            VendorPerformanceScoreService scoreService) {
-        this.scoreService = scoreService;
+    public VendorController(VendorService vendorService) {
+        this.vendorService = vendorService;
     }
 
-    @PostMapping("/calculate/{vendorId}")
-    public ResponseEntity<VendorPerformanceScore>
-    calculate(@PathVariable Long vendorId) {
-        return ResponseEntity.ok(
-                scoreService.calculateScore(vendorId)
-        );
+    @PostMapping
+    public Vendor createVendor(@RequestBody Vendor vendor) {
+        return vendorService.createVendor(vendor);
     }
 
-    @GetMapping("/latest/{vendorId}")
-    public ResponseEntity<VendorPerformanceScore>
-    latest(@PathVariable Long vendorId) {
-        return ResponseEntity.ok(
-                scoreService.getLatestScore(vendorId)
-        );
+    @GetMapping("/{id}")
+    public Vendor getVendorById(@PathVariable Long id) {
+        return vendorService.getVendorById(id);
     }
 
-    @GetMapping("/vendor/{vendorId}")
-    public ResponseEntity<List<VendorPerformanceScore>>
-    history(@PathVariable Long vendorId) {
-        return ResponseEntity.ok(
-                scoreService.getScoresForVendor(vendorId)
-        );
+    @GetMapping
+    public List<Vendor> getAllVendors() {
+        return vendorService.getAllVendors();
+    }
+
+    @PutMapping("/{id}")
+    public Vendor updateVendor(@PathVariable Long id,
+                               @RequestBody Vendor vendor) {
+        return vendorService.updateVendor(id, vendor);
+    }
+
+    @PutMapping("/{id}/deactivate")
+    public void deactivateVendor(@PathVariable Long id) {
+        vendorService.deactivateVendor(id);
     }
 }
