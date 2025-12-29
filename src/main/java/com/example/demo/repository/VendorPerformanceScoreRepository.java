@@ -11,7 +11,7 @@ import java.util.List;
 public interface VendorPerformanceScoreRepository
         extends JpaRepository<VendorPerformanceScore, Long> {
 
-    // ✅ REQUIRED BY TEST CASES (DO NOT RENAME)
+
     @Query("""
         SELECT vps
         FROM VendorPerformanceScore vps

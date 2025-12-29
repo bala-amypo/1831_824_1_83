@@ -18,7 +18,7 @@ public class Vendor {
     private Boolean active = true;
 
     public Vendor() {
-        // default constructor required by JPA
+       
     }
 
     public Vendor(String name, String contactEmail, String contactPhone) {
@@ -28,7 +28,6 @@ public class Vendor {
         this.active = true;
     }
 
-    // ===== Getters and Setters =====
 
     public Long getId() {
         return id;

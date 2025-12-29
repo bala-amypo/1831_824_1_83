@@ -17,7 +17,7 @@ public class VendorTier {
     private Boolean active = true;
 
     public VendorTier() {
-        // default constructor
+
     }
 
     public VendorTier(String tierName, Double minScoreThreshold, String description) {
@@ -26,8 +26,6 @@ public class VendorTier {
         this.description = description;
         this.active = true;
     }
-
-    // ===== Getters and Setters =====
 
     public Long getId() {
         return id;
